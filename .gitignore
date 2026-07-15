@@ -1,0 +1,28 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+*.swp
+*.swo
+*~
+.env
+
+# Release artefacts must never be committed to git history.
+# Raw-output tarballs are external assets (GitHub Release / Zenodo).
+release_assets/
+*.tar.gz
+*.tar.bz2
+*.tgz
+*.zip
+
+# LaTeX build artefacts at the repo root (compile-test transient files).
+# Note: *.out is intentionally NOT in this list because Turbomole ricc2
+# raw outputs use the same extension; raw-output tarballs are handled
+# by the patterns above. Patch D Step 7 cleans up its own artefacts.
+/main.aux
+/main.fdb_latexmk
+/main.fls
+/main.log
+/main.out
+/main.pdf
+/acs-main.bib

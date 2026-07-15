@@ -1,0 +1,4 @@
+scaffold,count,fraction,n_with_dft,predicted_invest_fraction,wilson_95ci
+Hz,90,0.581,90,0.811,"[0.718, 0.879]"
+5AP,55,0.355,55,1.000,"[0.935, 1.000]"
+BN-PAH,10,0.065,10,0.800,"[0.490, 0.943]"

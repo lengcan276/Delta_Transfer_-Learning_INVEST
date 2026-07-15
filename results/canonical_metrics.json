@@ -1,0 +1,1316 @@
+{
+  "library": {
+    "n_molecules_master": 2026,
+    "n_target_domain": 155,
+    "target_scaffold_counts": {
+      "Hz": 90,
+      "5AP": 55,
+      "BN-PAH": 10
+    },
+    "n_invest_labeled_pollice_source": 446,
+    "n_invest_labeled_thiswork_target_preR1": 19,
+    "n_invest_labeled_total": 465,
+    "n_invest_labeled_by_source_domain": {
+      "omar2023": 0,
+      "pang2025": 0,
+      "pollice": 446,
+      "this_work": 19
+    },
+    "n_invest_labeled_filter_description": "Counted master_molecule_table.csv rows with adc2_dest_ev.notna(), grouped by source_domain. Pollice = source training set (446); this_work = pre-Round-1 labelled target (19); total = 465.",
+    "n_invest_labeled_source_files": [
+      "data/processed/master_molecule_table.csv",
+      "data/invest_core/literature_data/pollice2021_adc2.txt"
+    ],
+    "adc2_available_n": 465,
+    "n_scaffold_families": 6,
+    "scaffold_family_counts": {
+      "pollice_heptazine_deriv": 1719,
+      "literature": 150,
+      "Hz": 90,
+      "5AP": 55,
+      "BN-PAH": 10,
+      "reference": 2
+    },
+    "n_source_dataset": 3444,
+    "n_model_input_rows": 2026,
+    "n_model_features_total": 84
+  },
+  "datasets": {
+    "field_name_note": "pre_round1_conformal_calibration_n and pre_round1_model_labeled_n refer to the pre-Round-1 target-domain labeled set used for split-conformal calibration and Δ-correction model training; they are NOT the DFT 5-anchor TDDFT calibration.",
+    "pre_round1_conformal_calibration_n": 19,
+    "pre_round1_model_labeled_n": 19,
+    "round1_conformal_test_n": 14,
+    "conformal_design_note": "Split conformal: calibration=pre-R1 (19 mols), test=R1 deployment (14 mols, excl Hz_NH23)",
+    "round1_deployment_n": 15,
+    "post_round1_excl_nh23_n": 33,
+    "post_round1_incl_nh23_n": 34,
+    "round2_selected_n": 12,
+    "round2_scaffold_distribution": {
+      "5AP": 5,
+      "Hz": 4,
+      "BN-PAH": 3
+    },
+    "round2_hz_selected": 4,
+    "round2_n_counterfactual": 2,
+    "round2_final_candidates": {
+      "n_rows": 12,
+      "scaffold_counts": {
+        "5AP": 5,
+        "Hz": 4,
+        "BN-PAH": 3
+      },
+      "bucket_counts": {
+        "acquisition": 10,
+        "counterfactual": 2
+      },
+      "predicted_dest_eV_min": -0.023199,
+      "predicted_dest_eV_max": 0.1545
+    },
+    "round1_frozen_candidates_n": 16
+  },
+  "model_performance": {
+    "pre_round1": {
+      "MAE": 0.0775468119,
+      "RMSE": 0.0971174501,
+      "Spearman_rho": 0.1473684211,
+      "sign_accuracy": 0.8421052632,
+      "INVEST_recall": 0.4,
+      "INVEST_precision": 1.0,
+      "MAE_meV": 77.546812,
+      "n_target": 19
+    },
+    "post_round1_excl_nh23": {
+      "MAE": 0.0520869598,
+      "RMSE": 0.0669209993,
+      "Spearman_rho": 0.7496657754,
+      "sign_accuracy": 0.7878787879,
+      "INVEST_recall": 0.5454545455,
+      "INVEST_precision": 0.75,
+      "MAE_meV": 52.08696,
+      "n_target": 33
+    },
+    "post_round1_incl_nh23": {
+      "MAE": 0.0735995895,
+      "RMSE": 0.1148557886,
+      "Spearman_rho": 0.5996944232,
+      "sign_accuracy": 0.7647058824,
+      "INVEST_recall": 0.6666666667,
+      "INVEST_precision": 0.6666666667,
+      "MAE_meV": 73.59959,
+      "n_target": 34
+    },
+    "round1_deployment": {
+      "MAE": 0.1015311782,
+      "RMSE": 0.1316960162,
+      "Spearman_rho": 0.5964285714,
+      "sign_accuracy": 0.6,
+      "INVEST_recall": 0.2857142857,
+      "INVEST_precision": 0.6666666667,
+      "MAE_meV": 101.531178,
+      "n_target": 15
+    },
+    "conformal_calibration_MAE_eV": 0.0076794981,
+    "conformal_test_MAE_eV": 0.0641797285,
+    "learning_curve_points": [
+      {
+        "n_added": 0,
+        "n_target": 19,
+        "MAE_eV": 0.0775468119,
+        "Spearman_rho": 0.1473684211,
+        "sign_accuracy": 0.8421052632,
+        "INVEST_recall": 0.4
+      },
+      {
+        "n_added": 3,
+        "n_target": 22,
+        "MAE_eV": 0.076451592,
+        "Spearman_rho": 0.3675889328,
+        "sign_accuracy": 0.6363636364,
+        "INVEST_recall": 0.1428571429
+      },
+      {
+        "n_added": 6,
+        "n_target": 25,
+        "MAE_eV": 0.0774710936,
+        "Spearman_rho": 0.3453846154,
+        "sign_accuracy": 0.64,
+        "INVEST_recall": 0.1428571429
+      },
+      {
+        "n_added": 9,
+        "n_target": 28,
+        "MAE_eV": 0.0686070215,
+        "Spearman_rho": 0.4756431308,
+        "sign_accuracy": 0.6428571429,
+        "INVEST_recall": 0.25
+      },
+      {
+        "n_added": 12,
+        "n_target": 31,
+        "MAE_eV": 0.059778336,
+        "Spearman_rho": 0.6560483871,
+        "sign_accuracy": 0.8064516129,
+        "INVEST_recall": 0.6
+      },
+      {
+        "n_added": 15,
+        "n_target": 34,
+        "MAE_eV": 0.0735995895,
+        "Spearman_rho": 0.5996944232,
+        "sign_accuracy": 0.7647058824,
+        "INVEST_recall": 0.6666666667
+      }
+    ]
+  },
+  "deployment": {
+    "n_molecules": 15,
+    "sign_correct_n": 9,
+    "sign_wrong_n": 6,
+    "sign_accuracy": 0.6,
+    "n_invest_actual": 7,
+    "n_non_invest_actual": 8,
+    "hz_nh23_included": true,
+    "hz_nh23_actual_dest_eV": -0.38346,
+    "hz_nh23_pred_dest_eV": 0.0091005,
+    "hz_nh23_abs_residual_eV": 0.3925605,
+    "scaffold_counts": {
+      "Hz": 10,
+      "5AP": 5
+    },
+    "bucket_counts": {
+      "near_zero": 5,
+      "uncertainty": 5,
+      "high_fosc": 3,
+      "outlier": 2
+    }
+  },
+  "ablation": {
+    "n_seeds": 10,
+    "n_target_p0a": null,
+    "multiseed_summary": {
+      "full": {
+        "MAE_mean_eV": 0.0548533562,
+        "MAE_std_eV": 0.0,
+        "sign_acc_mean": 0.7575757576,
+        "INVEST_rec_mean": 0.4545454545,
+        "n_delta_features": 65,
+        "n_physics_features": 11
+      },
+      "no_dft": {
+        "MAE_mean_eV": 0.0531652828,
+        "MAE_std_eV": 0.0,
+        "sign_acc_mean": 0.7272727273,
+        "INVEST_rec_mean": 0.4545454545,
+        "n_delta_features": 57,
+        "n_physics_features": 3
+      },
+      "no_ksod": {
+        "MAE_mean_eV": 0.0523264485,
+        "MAE_std_eV": 0.0,
+        "sign_acc_mean": 0.7575757576,
+        "INVEST_rec_mean": 0.4545454545,
+        "n_delta_features": 62,
+        "n_physics_features": 8
+      },
+      "no_stda": {
+        "MAE_mean_eV": 0.0548533562,
+        "MAE_std_eV": 0.0,
+        "sign_acc_mean": 0.7575757576,
+        "INVEST_rec_mean": 0.4545454545,
+        "n_delta_features": 65,
+        "n_physics_features": 11
+      },
+      "no_stda_no_ksod": {
+        "MAE_mean_eV": 0.0523264485,
+        "MAE_std_eV": 0.0,
+        "sign_acc_mean": 0.7575757576,
+        "INVEST_rec_mean": 0.4545454545,
+        "n_delta_features": 62,
+        "n_physics_features": 8
+      },
+      "rdkit_only": {
+        "MAE_mean_eV": 0.0520869598,
+        "MAE_std_eV": 0.0,
+        "sign_acc_mean": 0.7878787879,
+        "INVEST_rec_mean": 0.5454545455,
+        "n_delta_features": 54,
+        "n_physics_features": 0
+      }
+    },
+    "paired_tests": {
+      "n_seeds": 10,
+      "seeds": [
+        42,
+        123,
+        7,
+        2024,
+        314,
+        999,
+        55,
+        8080,
+        1337,
+        65535
+      ],
+      "n_configs": 6,
+      "n_target": 33,
+      "shared_features_n": 54,
+      "physics_in_target": [
+        "homo_spacing",
+        "lumo_spacing",
+        "od_index",
+        "dft_dest_raw_ev",
+        "dft_dest_calibrated_ev",
+        "fosc_dft",
+        "homo_ev",
+        "lumo_ev",
+        "hl_gap_ev",
+        "homo_m1_ev",
+        "lumo_p1_ev"
+      ],
+      "summary": [
+        {
+          "config": "full",
+          "MAE_mean": 0.05485335616062985,
+          "MAE_std": 0.0,
+          "sign_acc_mean": 0.7575757575757576,
+          "sign_acc_std": 0.0,
+          "INVEST_rec_mean": 0.4545454545454545,
+          "INVEST_rec_std": 0.0,
+          "n_delta_features": 65,
+          "n_physics": 11
+        },
+        {
+          "config": "no_dft",
+          "MAE_mean": 0.053165282771226105,
+          "MAE_std": 0.0,
+          "sign_acc_mean": 0.7272727272727273,
+          "sign_acc_std": 0.0,
+          "INVEST_rec_mean": 0.4545454545454545,
+          "INVEST_rec_std": 0.0,
+          "n_delta_features": 57,
+          "n_physics": 3
+        },
+        {
+          "config": "no_ksod",
+          "MAE_mean": 0.05232644854543785,
+          "MAE_std": 0.0,
+          "sign_acc_mean": 0.7575757575757576,
+          "sign_acc_std": 0.0,
+          "INVEST_rec_mean": 0.4545454545454545,
+          "INVEST_rec_std": 0.0,
+          "n_delta_features": 62,
+          "n_physics": 8
+        },
+        {
+          "config": "no_stda",
+          "MAE_mean": 0.05485335616062985,
+          "MAE_std": 0.0,
+          "sign_acc_mean": 0.7575757575757576,
+          "sign_acc_std": 0.0,
+          "INVEST_rec_mean": 0.4545454545454545,
+          "INVEST_rec_std": 0.0,
+          "n_delta_features": 65,
+          "n_physics": 11
+        },
+        {
+          "config": "no_stda_no_ksod",
+          "MAE_mean": 0.05232644854543785,
+          "MAE_std": 0.0,
+          "sign_acc_mean": 0.7575757575757576,
+          "sign_acc_std": 0.0,
+          "INVEST_rec_mean": 0.4545454545454545,
+          "INVEST_rec_std": 0.0,
+          "n_delta_features": 62,
+          "n_physics": 8
+        },
+        {
+          "config": "rdkit_only",
+          "MAE_mean": 0.05208695978701903,
+          "MAE_std": 0.0,
+          "sign_acc_mean": 0.7878787878787878,
+          "sign_acc_std": 0.0,
+          "INVEST_rec_mean": 0.5454545454545454,
+          "INVEST_rec_std": 0.0,
+          "n_delta_features": 54,
+          "n_physics": 0
+        }
+      ],
+      "paired_tests": {
+        "no_stda": {
+          "comparison": "full vs no_stda",
+          "n_seeds": 10,
+          "all_identical": true,
+          "mean_diff": 0.0,
+          "p_value": 1.0,
+          "significant_005": false,
+          "interpretation": "Removing features makes ZERO difference (identical across all 10 seeds)"
+        },
+        "no_ksod": {
+          "comparison": "full vs no_ksod",
+          "n_seeds": 10,
+          "all_seeds_same_diff": true,
+          "deterministic_diff": -0.0025269076151919964,
+          "effect_direction": "ablation_better",
+          "p_value": null,
+          "significant_005": null,
+          "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00253 eV. Wilcoxon not applicable (n_eff=1)."
+        },
+        "no_stda_no_ksod": {
+          "comparison": "full vs no_stda_no_ksod",
+          "n_seeds": 10,
+          "all_seeds_same_diff": true,
+          "deterministic_diff": -0.0025269076151919964,
+          "effect_direction": "ablation_better",
+          "p_value": null,
+          "significant_005": null,
+          "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00253 eV. Wilcoxon not applicable (n_eff=1)."
+        },
+        "no_dft": {
+          "comparison": "full vs no_dft",
+          "n_seeds": 10,
+          "all_seeds_same_diff": true,
+          "deterministic_diff": -0.0016880733894037436,
+          "effect_direction": "ablation_better",
+          "p_value": null,
+          "significant_005": null,
+          "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00169 eV. Wilcoxon not applicable (n_eff=1)."
+        },
+        "rdkit_only": {
+          "comparison": "full vs rdkit_only",
+          "n_seeds": 10,
+          "all_seeds_same_diff": true,
+          "deterministic_diff": -0.00276639637361082,
+          "effect_direction": "ablation_better",
+          "p_value": null,
+          "significant_005": null,
+          "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00277 eV. Wilcoxon not applicable (n_eff=1)."
+        }
+      },
+      "diagnosis": "Physics features produce minor numerical differences but NONE reach statistical significance (p > 0.05). Their contribution is negligible relative to RDKit fingerprint features.",
+      "design_note": "Source model uses shared features (RDKit FP/PCA, available in both domains). Delta correction model uses target-domain features which MAY include physics descriptors. Ablation removes physics features from the DELTA model only."
+    },
+    "task3_configs": {
+      "full": {
+        "MAE_eV": 0.0520869598,
+        "RMSE_eV": 0.0669209993,
+        "sign_accuracy": 0.7878787879,
+        "INVEST_recall": 0.5454545455,
+        "n_features": 69
+      },
+      "no_stda": {
+        "MAE_eV": 0.0520869598,
+        "RMSE_eV": 0.0669209993,
+        "sign_accuracy": 0.7878787879,
+        "INVEST_recall": 0.5454545455,
+        "n_features": 65
+      },
+      "no_ksod": {
+        "MAE_eV": 0.0520869598,
+        "RMSE_eV": 0.0669209993,
+        "sign_accuracy": 0.7878787879,
+        "INVEST_recall": 0.5454545455,
+        "n_features": 66
+      },
+      "no_stda_no_ksod": {
+        "MAE_eV": 0.0520869598,
+        "RMSE_eV": 0.0669209993,
+        "sign_accuracy": 0.7878787879,
+        "INVEST_recall": 0.5454545455,
+        "n_features": 62
+      },
+      "no_dft": {
+        "MAE_eV": 0.0520869598,
+        "RMSE_eV": 0.0669209993,
+        "sign_accuracy": 0.7878787879,
+        "INVEST_recall": 0.5454545455,
+        "n_features": 61
+      },
+      "rdkit_only": {
+        "MAE_eV": 0.0520869598,
+        "RMSE_eV": 0.0669209993,
+        "sign_accuracy": 0.7878787879,
+        "INVEST_recall": 0.5454545455,
+        "n_features": 54
+      }
+    }
+  },
+  "uncertainty": {
+    "calibration_n": 19,
+    "test_n": 14,
+    "calibration_MAE_eV": 0.0076794981,
+    "test_MAE_eV": 0.0641797285,
+    "design_note": "Split conformal: calibration=pre-R1 (19 mols), test=R1 deployment (14 mols, excl Hz_NH23)",
+    "coverage_by_nominal_level": {
+      "0.5": {
+        "conformal_calib_coverage": 0.5263157895,
+        "conformal_test_coverage": 0.0714285714,
+        "conformal_width_eV": 0.0103854397,
+        "conformal_q_hat": 0.0051927198,
+        "bootstrap_calib_coverage": 0.7368421053,
+        "bootstrap_test_coverage": 0.2857142857,
+        "bootstrap_test_mean_width_eV": 0.111410899
+      },
+      "0.6": {
+        "conformal_calib_coverage": 0.6315789474,
+        "conformal_test_coverage": 0.0714285714,
+        "conformal_width_eV": 0.0129962903,
+        "conformal_q_hat": 0.0064981451,
+        "bootstrap_calib_coverage": 0.8421052632,
+        "bootstrap_test_coverage": 0.5,
+        "bootstrap_test_mean_width_eV": 0.1391809748
+      },
+      "0.7": {
+        "conformal_calib_coverage": 0.7368421053,
+        "conformal_test_coverage": 0.2142857143,
+        "conformal_width_eV": 0.0181812343,
+        "conformal_q_hat": 0.0090906171,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 0.5714285714,
+        "bootstrap_test_mean_width_eV": 0.1712488003
+      },
+      "0.8": {
+        "conformal_calib_coverage": 0.8421052632,
+        "conformal_test_coverage": 0.2142857143,
+        "conformal_width_eV": 0.0233046122,
+        "conformal_q_hat": 0.0116523061,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 0.7142857143,
+        "bootstrap_test_mean_width_eV": 0.2119121255
+      },
+      "0.9": {
+        "conformal_calib_coverage": 0.9473684211,
+        "conformal_test_coverage": 0.3571428571,
+        "conformal_width_eV": 0.0480038795,
+        "conformal_q_hat": 0.0240019397,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 0.8571428571,
+        "bootstrap_test_mean_width_eV": 0.2719153248
+      },
+      "0.95": {
+        "conformal_calib_coverage": 1.0,
+        "conformal_test_coverage": 0.3571428571,
+        "conformal_width_eV": 0.0533550021,
+        "conformal_q_hat": 0.026677501,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 1.0,
+        "bootstrap_test_mean_width_eV": 0.3239842168
+      }
+    },
+    "conformal_90_test_coverage": 0.3571428571,
+    "conformal_90_coverage_wilson_ci_95": [
+      0.1634,
+      0.6124
+    ],
+    "conformal_95_test_coverage": 0.3571428571,
+    "conformal_95_width_eV": 0.0533550021,
+    "bootstrap_95_test_coverage": 1.0,
+    "bootstrap_95_mean_width_eV": 0.3239842168,
+    "fixed_baseline_width_eV": 0.32,
+    "fixed_baseline_coverage": 1.0
+  },
+  "active_learning": {
+    "fisher_full_cohort": {
+      "description": "Hz vs ALL non-Hz, full validated cohort — PAPER-CITED VALUE",
+      "hz_invest": 13,
+      "hz_total": 27,
+      "non_hz_invest": 0,
+      "non_hz_total": 8,
+      "contingency_table": [
+        [
+          13,
+          14
+        ],
+        [
+          0,
+          8
+        ]
+      ],
+      "p_value_two_sided": 0.015245,
+      "p_value_one_sided_greater": 0.013587,
+      "p_value": 0.015245,
+      "note": "Two-sided Fisher exact; rounded paper value is p=0.015"
+    },
+    "fisher_r1_subset": {
+      "description": "R1 subset only (Hz vs 5AP) — DO NOT cite in paper",
+      "hz_invest": 6,
+      "hz_total": 9,
+      "ap_invest": 0,
+      "ap_total": 5,
+      "p_value": 0.030969
+    },
+    "fisher_p_value_paper": 0.015245,
+    "fisher_contingency_paper": "Hz 13/27 vs non-Hz 0/8",
+    "domain_adapt_n_paired": 19,
+    "domain_adapt_wilcoxon_stat": 70.0,
+    "domain_adapt_p_two_sided": 0.3320655822753906,
+    "domain_adapt_significant_005": false,
+    "domain_adapt_sample_efficiency": 2.6877861949409203,
+    "domain_adapt_pre_mean_abs_res": 0.07754681188545728,
+    "domain_adapt_post_mean_abs_res": 0.058720944103110344,
+    "entropy_n_unlabeled": 122,
+    "entropy_delta_H": 6.790119678942119,
+    "entropy_rel_reduction": 0.13489124618514559,
+    "sce_al": 0.9182958340544896,
+    "sce_hz_greedy": 0.0,
+    "csrf": 3.2666666666666666,
+    "baseline_comparisons": {
+      "B1_uniform_random": {
+        "expected_invest_mean": 13.1743,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 1.0,
+        "p_value_excl_nh23": 1.0,
+        "significant_005": false
+      },
+      "B2_scaffold_stratified": {
+        "expected_invest_mean": 13.0829,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 1.0,
+        "p_value_excl_nh23": 1.0,
+        "significant_005": false
+      },
+      "B3_hz_greedy_dft": {
+        "expected_invest_mean": 12.1603,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 0.9993,
+        "p_value_excl_nh23": 1.0,
+        "significant_005": false
+      },
+      "B3_hz_greedy_empirical": {
+        "expected_invest_mean": 10.014,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 0.9708,
+        "p_value_excl_nh23": NaN,
+        "significant_005": false
+      }
+    }
+  },
+  "validation": {
+    "n_total": 35,
+    "classification_counts": {
+      "positive_gap": 21,
+      "negative_gap": 10,
+      "dark_negative_gap": 3,
+      "borderline_near_zero": 1
+    },
+    "n_negative_gap": 10,
+    "n_dark_negative_gap": 3,
+    "n_invest_strict": 13,
+    "n_invest_hz_only": 13,
+    "n_borderline": 1,
+    "n_table1_candidates": 14,
+    "confidence_counts": {
+      "medium": 33,
+      "low": 2
+    },
+    "decision_basis_counts": {
+      "ADC(2) primary": 31,
+      "ADC(2) primary with SCS-CC2 cross-check": 3,
+      "SCS-CC2 override after ADC(2) borderline result": 1
+    },
+    "batch_counts": {
+      "r1_deploy": 15,
+      "batch2": 10,
+      "round1": 10
+    },
+    "scaffold_counts": {
+      "Hz": 27,
+      "5AP": 6,
+      "BN-PAH": 1,
+      "BN": 1
+    },
+    "n_scs_crosschecked": 4,
+    "n_promoted_from_adc2_borderline": 1,
+    "min_DEST_eV": -0.38346,
+    "max_DEST_eV": 0.22997,
+    "median_DEST_eV": 0.05854
+  },
+  "method_crosscheck": {
+    "scope_separation_note": "candidate_scscc2_crosschecks (n=4) is a targeted SCS-CC2 verification on lead INVEST candidates and reports per-molecule sign agreement and ADC(2) vs SCS-CC2 absolute differences. method_consistency_benchmark is a population-scale audit drawn from results/method_consistency_table.csv reporting cross-method sign conflicts and basis-set coverage. The two are NOT interchangeable: do not quote candidate-level sign-agreement rates as evidence for population-scale method consistency, and do not quote benchmark-level conflict counts as a defect of the candidate cross-check set.",
+    "candidate_scscc2_crosschecks": {
+      "description": "ADC(2)/def2-SVP vs SCS-CC2/def2-SVP cross-check on the small set of candidate INVEST molecules promoted to higher-level verification. This is the 4-molecule consistency probe used to corroborate the negative-gap sign for the lead candidates; it is NOT a population-scale benchmark.",
+      "n": 4,
+      "n_all_signs_agree": 4,
+      "n_sign_conflict": 0,
+      "frac_sign_conflict": 0.0,
+      "abs_delta_meV_range": [
+        100.0,
+        174.4
+      ],
+      "molecule_names": [
+        "Hz_DMAC1_NPh21_CF31",
+        "Hz_NPh22_SO2Ph1",
+        "Hz_POZ1_NPh21_CF31",
+        "Hz_NH23"
+      ],
+      "molecule_details": [
+        {
+          "molecule": "Hz_DMAC1_NPh21_CF31",
+          "ADC2_SVP_eV": -0.12034,
+          "SCSCC2_eV": -0.22033,
+          "delta_meV": 100.0,
+          "all_signs_agree": true
+        },
+        {
+          "molecule": "Hz_NPh22_SO2Ph1",
+          "ADC2_SVP_eV": -0.09532,
+          "SCSCC2_eV": -0.21444,
+          "delta_meV": 119.1,
+          "all_signs_agree": true
+        },
+        {
+          "molecule": "Hz_POZ1_NPh21_CF31",
+          "ADC2_SVP_eV": -0.00971,
+          "SCSCC2_eV": -0.16557,
+          "delta_meV": 155.9,
+          "all_signs_agree": true
+        },
+        {
+          "molecule": "Hz_NH23",
+          "ADC2_SVP_eV": -0.38346,
+          "SCSCC2_eV": -0.55787,
+          "delta_meV": 174.4,
+          "all_signs_agree": true
+        }
+      ]
+    },
+    "method_consistency_benchmark": {
+      "description": "Population-scale multi-method consistency benchmark from results/method_consistency_table.csv. Reports sign-conflict molecules across DDFT / ADC(2)-SVP / SCS-CC2-SVP / ADC(2)-TZVP / SCS-CC2-TZVP. This is NOT the 4-molecule candidate SCS-CC2 cross-check above — do not conflate the two when reporting method-agreement statistics.",
+      "n_rows": 9,
+      "n_sign_conflict_molecules": 4,
+      "sign_conflict_molecule_list": [
+        "5AP_NEt2_NPh2",
+        "Hz_POZ1_DMAC2",
+        "Hz_POZ2_CN1",
+        "POZ-BN"
+      ],
+      "basis_set_coverage": {
+        "n_with_adc2_tzvp": 1,
+        "n_with_scscc2_svp": 3,
+        "n_with_scscc2_tzvp": 0,
+        "n_methods_distribution": {
+          "2": 6,
+          "3": 2,
+          "4": 1
+        }
+      }
+    }
+  },
+  "scs_cc2_extended_n13": {
+    "generator": "scripts/99_emit_canonical.py::build_scs_cc2_extended_n13",
+    "upstream_generator": "scripts/scscc2_extension/build_cross_check_n13.py",
+    "screened_cohort_n": 13,
+    "sign_disagreements": 0,
+    "rule_of_three_upper_bound": 0.2308,
+    "paper_cited_signrate": "0 sign disagreement within the ADC(2)-screened cohort",
+    "paper_cited_scope": "ADC(2)-screened negative-or-dark-negative cohort; not a randomly sampled chemical population",
+    "ci_method": "Not reported as a Clopper-Pearson population confidence interval because the 13 molecules were ADC(2)-preselected.",
+    "repository": "https://github.com/lengcan276/INVEST-n13",
+    "raw_provenance_status": "SCS-CC2 n=13 raw-output verified from local ricc2_scscc2 outputs; ADC(2) raw provenance remains partial.",
+    "audit_report_reference": "audit/phase4_qc.md",
+    "generated_from": [
+      "results/scscc2_extension_n13/cross_check_n13.csv",
+      "results/scscc2_extension_n13/stats_n13.json"
+    ],
+    "n_total": 13,
+    "n_sign_retain": 13,
+    "sign_retain_rate": 1.0,
+    "paper_cited_bound": "rule of three; one-sided 95% upper bound ~= 3/13 = 0.2308",
+    "ci_method_long_form": "rule of three (one-sided 95% upper bound on within-screen sign-disagreement rate; the 13 molecules are an ADC(2)-pre-screened cohort, not an i.i.d. random sample)",
+    "clopper_pearson_95_CI": [
+      0.7529,
+      1.0
+    ],
+    "clopper_pearson_90_CI": [
+      0.7942,
+      1.0
+    ],
+    "clopper_pearson_note": "transparency-only; not the paper-facing interpretation for this ADC(2)-pre-screened cohort",
+    "abs_ddEST_meV_min": 10.09,
+    "abs_ddEST_meV_max": 193.74,
+    "abs_ddEST_meV_mean": 109.84,
+    "abs_ddEST_meV_median": 101.45,
+    "narrowest_margin_mol": "Hz_NPh21_Cz2",
+    "narrowest_margin_meV": 10.1,
+    "design_note": "n=13 INVEST cohort: 4 historical SCS-CC2 jobs (Hz_NH23, Hz_DMAC1_NPh21_CF31, Hz_NPh22_SO2Ph1, Hz_POZ1_NPh21_CF31) using adc2_batch2_final / hf_calcs geometries (gnorm 6.6e-5 to 7.6e-4); 9 new Phase 2 SCS-CC2 jobs using delta_dft converged geometries (gnorm 5.6e-5 to 1.5e-4). All geometries within historical convergence baseline.",
+    "cross_check_csv": "results/scscc2_extension_n13/cross_check_n13.csv",
+    "stats_json": "results/scscc2_extension_n13/stats_n13.json",
+    "repository_canonical": "https://github.com/lengcan276/INVEST-n13",
+    "writer": "scripts/99_emit_canonical.py::build_scs_cc2_extended_n13",
+    "per_molecule_representation": "dict keyed by mol_id",
+    "per_molecule": {
+      "Hz_NH23": {
+        "ADC2_dEST_meV": -383.5,
+        "SCSCC2_dEST_meV": -557.9,
+        "SCSCC2_S1_eV": 3.99317,
+        "SCSCC2_T1_eV": 4.55104,
+        "abs_ddEST_meV": 174.4,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 383.5,
+        "SCSCC2_dEST_meV_abs": 557.9
+      },
+      "Hz_DMAC1_NPh21_CF31": {
+        "ADC2_dEST_meV": -120.3,
+        "SCSCC2_dEST_meV": -220.3,
+        "SCSCC2_S1_eV": 3.46991,
+        "SCSCC2_T1_eV": 3.69024,
+        "abs_ddEST_meV": 100.0,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 120.3,
+        "SCSCC2_dEST_meV_abs": 220.3
+      },
+      "Hz_NPh22_SO2Ph1": {
+        "ADC2_dEST_meV": -95.3,
+        "SCSCC2_dEST_meV": -214.4,
+        "SCSCC2_S1_eV": 3.47724,
+        "SCSCC2_T1_eV": 3.69168,
+        "abs_ddEST_meV": 119.1,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 95.3,
+        "SCSCC2_dEST_meV_abs": 214.4
+      },
+      "Hz_POZ1_NPh21_CF31": {
+        "ADC2_dEST_meV": -9.7,
+        "SCSCC2_dEST_meV": -165.6,
+        "SCSCC2_S1_eV": 3.46277,
+        "SCSCC2_T1_eV": 3.62834,
+        "abs_ddEST_meV": 155.9,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 9.7,
+        "SCSCC2_dEST_meV_abs": 165.6,
+        "borderline_low_evidence_warning": "ADC(2)/def2-SVP value inside +-30 meV near-zero window; SCS-CC2 promotion to negative-gap kept at low evidence strength pending def2-TZVP basis-set or method-family triangulation; SCS-CC2/def2-SVP basis assignment confirmed from the ricc2 runtime banner (both one-electron and auxiliary blocks print as def2-SVP for all elements)"
+      },
+      "Hz_NEt22_CF31": {
+        "ADC2_dEST_meV": -35.9,
+        "SCSCC2_dEST_meV": -111.1,
+        "SCSCC2_S1_eV": 3.67894,
+        "SCSCC2_T1_eV": 3.79007,
+        "abs_ddEST_meV": 75.2,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 35.9,
+        "SCSCC2_dEST_meV_abs": 111.1
+      },
+      "Hz_DMAC2_SO2Ph1": {
+        "ADC2_dEST_meV": -32.0,
+        "SCSCC2_dEST_meV": -225.8,
+        "SCSCC2_S1_eV": 3.47798,
+        "SCSCC2_T1_eV": 3.70377,
+        "abs_ddEST_meV": 193.7,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 32.0,
+        "SCSCC2_dEST_meV_abs": 225.8
+      },
+      "Hz_NH22_SO2Ph1": {
+        "ADC2_dEST_meV": -64.0,
+        "SCSCC2_dEST_meV": -163.4,
+        "SCSCC2_S1_eV": 3.6036,
+        "SCSCC2_T1_eV": 3.76704,
+        "abs_ddEST_meV": 99.4,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 64.0,
+        "SCSCC2_dEST_meV_abs": 163.4
+      },
+      "Hz_DMAC1_NPh21_SO2Ph1": {
+        "ADC2_dEST_meV": -66.0,
+        "SCSCC2_dEST_meV": -208.6,
+        "SCSCC2_S1_eV": 3.47411,
+        "SCSCC2_T1_eV": 3.68269,
+        "abs_ddEST_meV": 142.6,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 66.0,
+        "SCSCC2_dEST_meV_abs": 208.6
+      },
+      "Hz_Cz1_NPh21_CF31": {
+        "ADC2_dEST_meV": -136.0,
+        "SCSCC2_dEST_meV": -237.4,
+        "SCSCC2_S1_eV": 3.40203,
+        "SCSCC2_T1_eV": 3.63948,
+        "abs_ddEST_meV": 101.5,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 136.0,
+        "SCSCC2_dEST_meV_abs": 237.4
+      },
+      "Hz_NPh23": {
+        "ADC2_dEST_meV": -123.0,
+        "SCSCC2_dEST_meV": -231.3,
+        "SCSCC2_S1_eV": 3.63616,
+        "SCSCC2_T1_eV": 3.86746,
+        "abs_ddEST_meV": 108.3,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 123.0,
+        "SCSCC2_dEST_meV_abs": 231.3
+      },
+      "Hz_NPh21_Cz2": {
+        "ADC2_dEST_meV": -119.0,
+        "SCSCC2_dEST_meV": -129.1,
+        "SCSCC2_S1_eV": 3.55742,
+        "SCSCC2_T1_eV": 3.68651,
+        "abs_ddEST_meV": 10.1,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 119.0,
+        "SCSCC2_dEST_meV_abs": 129.1,
+        "narrowest_margin_warning": "smallest |ddEST| in the n=13 cohort; most likely sign-flip candidate under further method change"
+      },
+      "Hz_NEt21_NPh22": {
+        "ADC2_dEST_meV": -89.0,
+        "SCSCC2_dEST_meV": -154.6,
+        "SCSCC2_S1_eV": 3.75133,
+        "SCSCC2_T1_eV": 3.90595,
+        "abs_ddEST_meV": 65.6,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 89.0,
+        "SCSCC2_dEST_meV_abs": 154.6
+      },
+      "Hz_NPh22_CN1": {
+        "ADC2_dEST_meV": -54.0,
+        "SCSCC2_dEST_meV": -136.1,
+        "SCSCC2_S1_eV": 3.33146,
+        "SCSCC2_T1_eV": 3.4676,
+        "abs_ddEST_meV": 82.1,
+        "sign_agree": true,
+        "ADC2_dEST_meV_abs": 54.0,
+        "SCSCC2_dEST_meV_abs": 136.1
+      }
+    }
+  },
+  "uncertainty_diagnostics": {
+    "distance_nonconformity": {
+      "experiment_id": "diag_A_distance_nonconformity",
+      "hypothesis": "Conformal nonconformity score on the test set is correlated with the molecule's Tanimoto distance to its nearest calibration neighbour.",
+      "fp_settings": {
+        "type": "Morgan",
+        "radius": 2,
+        "nBits": 2048
+      },
+      "n_calibration": 19,
+      "n_test": 14,
+      "test_distance_summary": {
+        "min": 0.20833333333333337,
+        "median": 0.3541666666666667,
+        "mean": 0.36448069522366977,
+        "max": 0.5853658536585367
+      },
+      "calib_loo_distance_summary": {
+        "min": 0.2068965517241379,
+        "median": 0.28125,
+        "mean": 0.3436105571744422,
+        "max": 0.7592592592592593
+      },
+      "spearman_test_distance_vs_nonconf": {
+        "rho": 0.24422457022770952,
+        "p_two_sided": 0.4000901298150556,
+        "n": 14
+      },
+      "spearman_test_distance_vs_abs_residual": {
+        "rho": 0.24422457022770952,
+        "p_two_sided": 0.4000901298150556,
+        "n": 14
+      },
+      "spearman_calib_loo_distance_vs_nonconf": {
+        "rho": 0.28772683736493676,
+        "p_two_sided": 0.23228482082471294,
+        "n": 19
+      },
+      "mannwhitney_test_dist_gt_calib_loo_dist": {
+        "U": 157.0,
+        "p_one_sided_greater": 0.19583809802547258,
+        "interpretation": "Tests whether deployment (test) molecules are systematically further from the calibration set than calibration molecules are from each other (LOO-style)."
+      },
+      "interpretation": "If r_test_distance_vs_nonconf > 0 with p < 0.1, the conformal under-coverage is at least partially driven by chemical-space shift between calibration and deployment subsets — i.e., the exchangeability assumption is empirically violated, and a distance-aware (Mondrian or locally-weighted) recalibration is warranted."
+    },
+    "distance_to_source": {
+      "experiment_id": "diag_B_distance_to_source",
+      "hypothesis": "Round-1 deployment molecules are systematically farther from the 446-molecule Pollice ADC(2) source training set than the pre-Round-1 calibration molecules are, providing a geometric mechanism for the conformal under-coverage.",
+      "fp_settings": {
+        "type": "Morgan",
+        "radius": 2,
+        "nBits": 2048,
+        "knn_k": 5
+      },
+      "n_pollice_source": 446,
+      "n_calibration": 19,
+      "n_test": 14,
+      "distance_summary_d_nn_to_source": {
+        "calib_mean": 0.7449676870847276,
+        "calib_median": 0.75,
+        "test_mean": 0.741127693912433,
+        "test_median": 0.7422798322531452
+      },
+      "distance_summary_d_knn5_to_source": {
+        "calib_mean": 0.7906813594705469,
+        "calib_median": 0.8031265664160401,
+        "test_mean": 0.790564792929296,
+        "test_median": 0.7988133831362936
+      },
+      "mannwhitney_test_dist_gt_calib_dist": {
+        "d_nn": {
+          "U": 135.0,
+          "p_one_sided_greater": 0.4781894102032656
+        },
+        "d_knn5": {
+          "U": 135.5,
+          "p_one_sided_greater": 0.4709571760754787
+        }
+      },
+      "spearman_distance_vs_abs_residual": {
+        "d_nn_all_33": {
+          "rho": 0.15943129459541575,
+          "p": 0.37548999478966877,
+          "n": 33
+        },
+        "d_knn5_all_33": {
+          "rho": 0.15811466040676259,
+          "p": 0.3794968330135559,
+          "n": 33
+        },
+        "d_nn_test_14": {
+          "rho": -0.16501660150520917,
+          "p": 0.5729185122712152,
+          "n": 14
+        },
+        "d_knn5_test_14": {
+          "rho": -0.13406593406593406,
+          "p": 0.6477195279851133,
+          "n": 14
+        }
+      },
+      "interpretation": "If test mols are systematically farther from the source set than calib mols are (Mann–Whitney p < 0.05, one-sided), the deployment-shift hypothesis holds and conformal calibration computed on the calib set cannot be expected to transfer."
+    },
+    "mondrian_coverage": {
+      "experiment_id": "diag_C_mondrian_coverage",
+      "method": "Mondrian (scaffold-conditional) split-conformal regressor with finite-sample quantile correction (rank = ceil((n+1)*alpha)).",
+      "nominal_coverage": 0.95,
+      "scaffold_buckets": [
+        "Hz",
+        "5AP",
+        "other"
+      ],
+      "global_reference": {
+        "q_hat_eV": 0.0266775010490416,
+        "q_hat_meV": 26.6775010490416,
+        "coverage": 0.35714285714285715,
+        "covered_over_n": "5/14",
+        "wilson_95_ci": [
+          0.1634473175355414,
+          0.612355768960926
+        ]
+      },
+      "buckets": {
+        "Hz": {
+          "n_calib": 16,
+          "n_test": 9,
+          "q_hat_meV": 23.853,
+          "coverage": 0.2222,
+          "covered_over_n": "2/9",
+          "wilson_95_ci": [
+            0.0632,
+            0.5474
+          ]
+        },
+        "5AP": {
+          "n_calib": 1,
+          "n_test": 5,
+          "q_hat_meV": 2.885,
+          "coverage": 0.0,
+          "covered_over_n": "0/5",
+          "wilson_95_ci": [
+            0.0,
+            0.4345
+          ]
+        },
+        "other": {
+          "n_calib": 2,
+          "n_test": 0,
+          "q_hat_meV": 26.678,
+          "coverage": null,
+          "covered_over_n": "n/a",
+          "wilson_95_ci": [
+            null,
+            null
+          ]
+        }
+      },
+      "mondrian_aggregate": {
+        "coverage": 0.14285714285714285,
+        "coverage_pct": 14.3,
+        "covered_over_n": "2/14",
+        "wilson_95_ci": [
+          0.040093921271464966,
+          0.39941379496970353
+        ],
+        "wilson_95_ci_pct": [
+          4.0,
+          39.9
+        ]
+      },
+      "interpretation": "Mondrian buckets reveal whether the global 35.7% under-coverage is uniform or scaffold-driven. A bucket with very different coverage from the global aggregate is a candidate for scaffold-aware re-calibration. With these small calibration buckets, all coverage estimates carry wide Wilson CIs; treat as descriptive."
+    },
+    "local_conformal": {
+      "experiment_id": "diag_D_local_conformal",
+      "method": "Tanimoto-weighted locally-adaptive split-conformal: per-test-molecule weighted upper-tail quantile of the calibration nonconformity scores, with weights w_i ∝ (T(f_t, f_calib[i]) + ε)^β. β = 0 recovers the global split-conformal quantile.",
+      "fp_settings": {
+        "type": "Morgan",
+        "radius": 2,
+        "nBits": 2048,
+        "epsilon": 0.001
+      },
+      "nominal_levels_tested": [
+        0.8,
+        0.9,
+        0.95
+      ],
+      "n_calibration": 19,
+      "n_test": 14,
+      "betas_tested": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "results_by_alpha_beta": {
+        "alpha_0.8_beta_0": {
+          "alpha": 0.8,
+          "beta": 0,
+          "covered_over_n": "3/14",
+          "coverage": 0.21428571428571427,
+          "wilson_95_ci": [
+            0.07571386712693184,
+            0.47589230586600295
+          ],
+          "q_hat_local_meV_min": 11.2223240709304,
+          "q_hat_local_meV_median": 11.2223240709304,
+          "q_hat_local_meV_max": 11.2223240709304,
+          "q_hat_local_meV_mean": 11.222324070930403
+        },
+        "alpha_0.8_beta_1": {
+          "alpha": 0.8,
+          "beta": 1,
+          "covered_over_n": "4/14",
+          "coverage": 0.2857142857142857,
+          "wilson_95_ci": [
+            0.11721378644576919,
+            0.5464908432989318
+          ],
+          "q_hat_local_meV_min": 11.2223240709304,
+          "q_hat_local_meV_median": 18.899420496225247,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 18.913846800156893
+        },
+        "alpha_0.8_beta_2": {
+          "alpha": 0.8,
+          "beta": 2,
+          "covered_over_n": "4/14",
+          "coverage": 0.2857142857142857,
+          "wilson_95_ci": [
+            0.11721378644576919,
+            0.5464908432989318
+          ],
+          "q_hat_local_meV_min": 13.945543553829,
+          "q_hat_local_meV_median": 23.8532974386215,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 22.232883590289404
+        },
+        "alpha_0.8_beta_4": {
+          "alpha": 0.8,
+          "beta": 4,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 13.945543553829,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 25.364617855037828
+        },
+        "alpha_0.9_beta_0": {
+          "alpha": 0.9,
+          "beta": 0,
+          "covered_over_n": "4/14",
+          "coverage": 0.2857142857142857,
+          "wilson_95_ci": [
+            0.11721378644576919,
+            0.5464908432989318
+          ],
+          "q_hat_local_meV_min": 23.8532974386215,
+          "q_hat_local_meV_median": 23.8532974386215,
+          "q_hat_local_meV_max": 23.8532974386215,
+          "q_hat_local_meV_mean": 23.853297438621503
+        },
+        "alpha_0.9_beta_1": {
+          "alpha": 0.9,
+          "beta": 1,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 23.8532974386215,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.47577221972588
+        },
+        "alpha_0.9_beta_2": {
+          "alpha": 0.9,
+          "beta": 2,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 26.6775010490416,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.6775010490416
+        },
+        "alpha_0.9_beta_4": {
+          "alpha": 0.9,
+          "beta": 4,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 26.6775010490416,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.6775010490416
+        },
+        "alpha_0.95_beta_0": {
+          "alpha": 0.95,
+          "beta": 0,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 26.6775010490416,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.6775010490416
+        },
+        "alpha_0.95_beta_1": {
+          "alpha": 0.95,
+          "beta": 1,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 26.6775010490416,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.6775010490416
+        },
+        "alpha_0.95_beta_2": {
+          "alpha": 0.95,
+          "beta": 2,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 26.6775010490416,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.6775010490416
+        },
+        "alpha_0.95_beta_4": {
+          "alpha": 0.95,
+          "beta": 4,
+          "covered_over_n": "5/14",
+          "coverage": 0.35714285714285715,
+          "wilson_95_ci": [
+            0.1634473175355414,
+            0.612355768960926
+          ],
+          "q_hat_local_meV_min": 26.6775010490416,
+          "q_hat_local_meV_median": 26.6775010490416,
+          "q_hat_local_meV_max": 26.6775010490416,
+          "q_hat_local_meV_mean": 26.6775010490416
+        }
+      },
+      "structural_observation": "At alpha = 0.95 with n_calib = 19, the finite-sample ceil((n+1)*alpha) = 19 = n rank pins q_hat to the maximum calibration nonconformity score regardless of weighting; locally-weighted CP cannot differ from global CP at this level. At alpha = 0.90 and 0.80 the rank is < n and local weighting can act.",
+      "interpretation": "Sweeping β from 0 (global quantile) upward localises the calibration weighting around each test molecule. Compare coverage at α = 0.80, 0.90, 0.95 to disentangle the structural pinning at α = 0.95 from a real local-weighting effect at lower α."
+    }
+  },
+  "per_molecule_highlights": {
+    "Hz_NH23": {
+      "adc2_gap_meV": -383.5,
+      "scs_cc2_gap_meV": -557.9,
+      "fosc": 0.0,
+      "classification": "dark_negative_gap",
+      "confidence": "medium",
+      "context": "Deepest negative-gap molecule in the decision table; dark (fosc = 0); used as a mechanistic endpoint, not an emitter candidate.",
+      "source_csv": "results/validated_candidates_master.csv",
+      "source_csv_key": "mol_id == 'Hz_NH23'"
+    },
+    "Hz_POZ1_NPh21_CF31": {
+      "adc2_gap_meV": -9.7,
+      "scs_cc2_gap_meV": -165.6,
+      "fosc": 0.038321,
+      "classification": "negative_gap",
+      "confidence": "low",
+      "context": "Borderline by ADC(2)/def2-SVP (|DEST| < 30 meV window); promoted to negative-gap classification by the SCS-CC2 result; kept at low confidence pending basis-set sensitivity check.",
+      "source_csv": "results/validated_candidates_master.csv",
+      "source_csv_key": "mol_id == 'Hz_POZ1_NPh21_CF31'"
+    },
+    "field_purpose": "Per-molecule meV values cited by name in the manuscript (§4.5 and §5). Exposing them at the top level lets scripts/audit_numbers.py resolve the four meV figures (9.7, 165.6, 383, 558) that previously appeared as unresolved because they only existed in CSV rows."
+  },
+  "missing_metrics": [],
+  "known_inconsistencies": [
+    {
+      "key": "datasets.round1_n",
+      "value_a": 15,
+      "source_a": "task1_deployment_detail.csv (all deployed)",
+      "value_b": 14,
+      "source_b": "p0b_conformal_calibration.json test_n (Hz_NH23 excluded by design)",
+      "status": "intentional_analysis_set_distinction",
+      "resolution": "15 = Round-1 deployment yield (full set, includes Hz_NH23). 14 = Fisher / split-conformal subset (excludes Hz_NH23 by design as a dark / fosc=0 outlier whose residual would dominate the empirical quantile). The two numbers describe different analysis sets and must each be cited only in their own scope."
+    },
+    {
+      "key": "ablation.task3_all_configs_identical_MAE",
+      "value_a": "all 6 configs: 0.0520869598 eV",
+      "source_a": "task3_ablation_results.csv",
+      "value_b": "p0a shows variation across configs",
+      "source_b": "p0a_ablation_multiseed.csv",
+      "status": "unresolved_contradiction"
+    },
+    {
+      "key": "ablation.full_config_MAE_mismatch",
+      "value_a": 0.0548533562,
+      "source_a": "p0a_ablation_multiseed.csv (10-seed mean)",
+      "value_b": 0.0520869598,
+      "source_b": "task3_ablation_results.csv",
+      "status": "unresolved_contradiction"
+    },
+    {
+      "key": "active_learning.fisher_p_value",
+      "value_a": 0.030969,
+      "source_a": "stats_validation_results.json (R1 subset, Hz vs 5AP only)",
+      "value_b": 0.015245,
+      "source_b": "validated_candidates_master.csv (full cohort, Hz vs ALL non-Hz) ← paper uses this",
+      "status": "intentional_analysis_set_distinction",
+      "resolution": "0.015245 = full validated cohort Hz vs all non-Hz Fisher exact (13/27 vs 0/8) — used in Abstract, §3.4, Conclusion. 0.030969 = Round-1 subset Hz vs 5AP only (6/9 vs 0/5) — used in §3.4 paragraph and Fig 5(b) caption. The two p-values describe different cohorts and contrasts; both are correct in their own scope and the paper labels each scope flag explicitly."
+    },
+    {
+      "key": "active_learning.r1_invest_count_7_vs_6",
+      "value_a": "7/15",
+      "source_a": "task2 our_invest (Round-1 deployment yield, incl. Hz_NH23)",
+      "value_b": "6/14",
+      "source_b": "task2 our_invest_excl_nh23 (Fisher / conformal subset, excl. Hz_NH23)",
+      "status": "intentional_analysis_set_distinction",
+      "resolution": "7/15 is the Round-1 deployment yield and must be cited for acquisition-policy outcomes. 6/14 is the Fisher / split-conformal subset (excludes Hz_NH23, the dark fosc=0 outlier) and must be cited only for the Fisher and conformal analyses. The two are different analysis sets — not contradictory. See paper/audit_reports/fig5_reconciliation.md for the full molecule-level audit."
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+\documentclass[journal=jcisd8,manuscript=article]{achemso}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{siunitx}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}{../figures/}}
+
+\sisetup{separate-uncertainty=true}
+
+\title{Delta Transfer Learning for Inverted Singlet--Triplet Gap Discovery: Small-Sample Correction, Deployment-Shift Uncertainty, and Scaffold-Resolved Validation}
+
+\author{Author One}
+\affiliation{School of Chemistry, Example University, City 000000, China}
+\author{Author Two}
+\affiliation{School of Chemistry, Example University, City 000000, China}
+\email{corresponding@example.edu}
+
+\begin{document}
+
+\begin{abstract}
+Inverted singlet--triplet gap (INVEST) discovery is constrained by the cost of correlated excited-state labels: the small target-domain set available for any new campaign is typically defined at a level of theory different from the larger historical corpus, and exhaustive higher-level validation across all candidates is computationally prohibitive. We address this with a scaffold-resolved active-learning and hierarchical-validation workflow built on a 155-molecule design library spanning heptazine (Hz), 5-aminopyrimidine (5AP), and BN/BN-PAH motifs. A delta transfer model trained on 446 Pollice ADC(2)/cc-pVDZ source labels and a 33-molecule RI-ADC(2)/def2-SVP target set provides a low-cost coarse predictor (post-round LOO-CV MAE \SI{52.1}{meV}, sign accuracy 78.8\%, $n=33$ excluding Hz\_NH23) whose intended role is scaffold-level prioritization rather than fine candidate ranking. Round-1 active learning operationalises this role by spending 15 queries to decisively eliminate the 5AP scaffold: all five queried 5-aminopyrimidines are positive-gap molecules, and across the full 35-molecule validated cohort the Hz-versus-non-Hz contingency is 13/27 vs.\ 0/8 (two-sided Fisher exact $p=0.015$, descriptive on the actively selected cohort). Hierarchical validation then extends the SCS-CC2 cross-check across all thirteen ADC(2)-screened INVEST candidates (the Table~1 shortlist pre-registered before the cross-check campaign); SCS-CC2 reproduces the negative sign in every case, giving 0 sign disagreement within the screened cohort (one-sided 95\% rule-of-three upper bound on within-screen sign-disagreement rate $\approx 3/13 = 0.23$), and one heptazine that is borderline at ADC(2)/def2-SVP is promoted to negative-gap by the higher-level cross-check. All 13 SCS-CC2 $\Delta E_\mathrm{ST}$ values are systematically more negative than the corresponding ADC(2) values (\SIrange{10}{194}{meV} deeper, mean \SI{110}{meV}), so the result is best read as method-family consistency within the ADC(2)/CC2 hierarchy rather than method-independent confirmation against an unrelated theory level. Bootstrap and split-conformal uncertainty estimates are reported with their finite-sample limits ($n_\text{calib}=19$, $n_\text{test}=14$) and discussed as auxiliaries rather than as guarantees. The resulting workflow is a reproducible recipe for low-data INVEST discovery: cheap ML for scaffold pruning, expensive higher-level theory for sign-level confirmation on the surviving leads.
+\end{abstract}
+
+% ============================================================================
+\section{Introduction}
+% ============================================================================
+
+For most organic chromophores, the first triplet state lies below the first singlet excited state, reflecting the exchange stabilization captured by Hund's rule and its molecular-orbital analogues.\cite{Hund1925,Kutzelnigg1996} Molecules with an inverted singlet--triplet gap ($\Delta E_\mathrm{ST}=E(\mathrm{S}_1)-E(\mathrm{T}_1)<0$) violate this ordering and have therefore attracted sustained attention in excited-state materials design.\cite{Ehrmaier2019,deSilva2019,Ricci2021} Computational studies have established that such behavior is chemically plausible, especially in heptazine-derived systems, while also showing that both the magnitude and, in some cases, the sign of $\Delta E_\mathrm{ST}$ depend sensitively on the chosen electronic-structure method and basis set.\cite{Pollice2021,Loos2021,Loos2023}
+
+This creates a particularly stringent workflow problem. High-level excited-state calculations are expensive, yet lower-cost approximations may mis-rank compounds precisely in the near-zero regime where the sign of $\Delta E_\mathrm{ST}$ is the chemically relevant decision variable. Machine-learning models are therefore attractive, but the available labels are both sparse and heterogeneous across levels of theory. Recent screening studies have demonstrated that new INVEST cores can be found computationally,\cite{Omar2023,SanzRodrigo2024} but they do not resolve the central workflow question addressed here: whether a model trained on one electronic-structure level can support decision-making when the operative classification boundary is defined at another.
+
+Delta learning provides a natural framework for addressing this mismatch. Rather than learning absolute $\Delta E_\mathrm{ST}$ values directly, a source-domain model can be trained on a larger historical dataset and subsequently corrected by a smaller residual model fitted on the target domain.\cite{Ramakrishnan2015,Smith2019,Dral2020} This strategy is especially attractive for INVEST discovery, where post-Hartree--Fock labels are scarce. Its practical value, however, depends not only on retrospective accuracy but also on whether the corrected model survives deployment-shift uncertainty analysis and active-learning selection on genuinely new structures.\cite{Musil2019}
+
+In this study we examine that question on a real closed-loop campaign. We constructed a 155-molecule library spanning heptazine, 5-aminopyrimidine, and BN/BN-PAH motifs; screened it using calibrated low-level calculations; updated a delta transfer model with newly acquired RI-ADC(2) labels; and advanced a subset of compounds to cross-checked validation. The analysis addresses four connected questions: how much predictive value can be extracted from a 446$\rightarrow$33 source-to-target transfer setting, whether target-domain physics descriptors improve the corrected model, how stable standard uncertainty estimators remain under deployment shift, and what the validated set supports regarding scaffold selectivity and method-level confidence in INVEST assignments.
+
+The novelty of the present work is two-fold. First, we demonstrate that a single round of scaffold-resolved active learning can decisively prune a low-data INVEST design library: 15 carefully chosen queries, drawn from a four-bucket acquisition heuristic that mixes uncertainty, near-zero predictions, oscillator-strength prioritization, and feature-space outliers, are sufficient to eliminate the 5-aminopyrimidine scaffold from further consideration and to lock attention on the heptazine subset (Hz vs.\ non-Hz contingency 13/27 vs.\ 0/8, two-sided Fisher exact $p=0.015$, descriptive on the actively selected cohort). Second, we operationalise a hierarchical validation tier in which ADC(2)/def2-SVP serves as the primary post-Hartree--Fock label and SCS-CC2/def2-SVP is deployed across all thirteen ADC(2)-screened INVEST candidates (pre-registered as the Table~1 shortlist before the SCS-CC2 campaign); this tier confirms sign agreement in all 13 cases (0 disagreement, one-sided 95\% rule-of-three upper bound on within-screen disagreement rate $\approx 0.23$), promotes one ADC(2)-borderline heptazine to negative-gap, and yields a systematic SCS-CC2$<$ADC(2) shift of \SIrange{10}{194}{meV} that we interpret as method-family consistency within the ADC(2)/CC2 hierarchy rather than as method-independent confirmation. The larger 21 positive-gap subset retains only the cheaper ADC(2) label. Together these two contributions define a low-data discovery recipe: cheap ML for scaffold elimination, expensive correlated-wavefunction theory only for sign-level confirmation on the small surviving lead set. All numerical statements below are tied directly to the scripts and result tables used to generate the figures and validation summaries.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{Fig0_workflow.pdf}
+  \caption{Closed-loop workflow used in this study. The source model is trained on 446 Pollice ADC(2)/cc-pVDZ labels, corrected on a 33-molecule RI-ADC(2)/def2-SVP target set, challenged on 15 round-1 acquisitions, and summarized on a 35-molecule validated decision table. Higher-level SCS-CC2 cross-checks were applied to all 13 ADC(2)-screened negative-or-dark-negative-gap candidates; the 21 positive-gap and 1 borderline-near-zero molecules retain only the ADC(2) label.}
+  \label{fig:workflow}
+\end{figure}
+
+
+% ============================================================================
+\section{Methods}
+% ============================================================================
+
+\subsection{Library Construction and Low-Level Screening}
+
+The in-house design library contains 155 molecules: 90 heptazine derivatives (Hz), 55 5-aminopyrimidines (5AP), and 10 BN/BN-PAH derivatives. Initial geometries were generated with ETKDGv3 and MMFF94 pre-optimization,\cite{Riniker2015} followed by GFN2-xTB optimization in implicit toluene.\cite{Bannwarth2019} Low-level screening used TDA-TDDFT/PBE0/def2-SVP for S$_1$ and UKS $\Delta$SCF/PBE0/def2-SVP for T$_1$ in ORCA 6.1.0.\cite{Neese2020} The resulting raw $\Delta E_\mathrm{ST}$ values were linearly calibrated against five ADC(2) anchor molecules using a least-squares linear fit (empirical fit, $N=5$); the fit coefficients and goodness-of-fit are reported in the Supporting Information alongside the script-generated calibration artifact. The calibration was used as a coarse ranking device rather than as a standalone quantitative predictor.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{Fig6_library.pdf}
+  \caption{Overview of the 155-molecule design library and low-level screen. The library contains 90 heptazines, 55 5-aminopyrimidines, and 10 BN/BN-PAH molecules, and the four panels summarize scaffold composition, calibrated low-level $\Delta E_\mathrm{ST}$ values, oscillator strengths, and the joint $\Delta E_\mathrm{ST}$--$f_\mathrm{osc}$ landscape used for initial prioritization.}
+  \label{fig:library}
+\end{figure}
+
+\subsection{Reference Labels and Analysis Sets}
+
+All machine-learning analyses were performed on the processed tables used by the project scripts. The labeled source domain contains 446 molecules from the Pollice dataset with ADC(2)/cc-pVDZ reference gaps.\cite{Pollice2021} The final in-house validation table contains 35 molecules with ADC(2)-level labels, but the post-round ML analyses use a 33-molecule target set because two final dark-candidate validations (Hz\_NH23 and Hz\_NPh23) are not part of the closed-loop feature table used for transfer training and deployment benchmarking. Within the 33-molecule target set, 19 molecules are available before round-1 deployment and 14 additional molecules are incorporated after round-1 acquisition.
+
+This distinction matters. The manuscript therefore reports 33 molecules for the post-round ML target domain; 15 molecules were queried in round-1 deployment, of which 14 form the conformal and statistical evaluation subset (Hz\_NH23 excluded by design); and 35 molecules constitute the final validation summary. Round-1 deployment yield is expressed as 7 out of 15 queried molecules; the 14-molecule subset is used only for Fisher exact tests and conformal benchmarking and must not be used as the deployment denominator.
+
+\subsection{Post-Hartree--Fock Validation}
+
+Primary validation used RI-ADC(2)/def2-SVP calculations with the \texttt{ricc2} module of Turbomole 7.5.1.\cite{TURBOMOLE2024} All 13 INVEST candidates (10 negative-gap + 3 dark negative-gap) additionally received SCS-CC2/def2-SVP cross-checks, used as independent higher-level comparisons for sign consistency and quantitative method dependence; the 21 positive-gap and 1 borderline-near-zero candidates retain only the ADC(2) label. The cross-check cohort was assembled in two batches: an original 4-molecule batch (Hz\_NH23, Hz\_DMAC1\_NPh21\_CF31, Hz\_NPh22\_SO2Ph1, Hz\_POZ1\_NPh21\_CF31) computed using the same xtb-optimized geometries as the corresponding ADC(2) calculations (xtb GFN2 gnorm $6.6\!\times\!10^{-5}$ to $7.6\!\times\!10^{-4}$ Eh\,a$_0^{-1}$); and 9 additional molecules computed using independently re-converged $\delta$-DFT xtb geometries (gnorm $5.6\!\times\!10^{-5}$ to $1.5\!\times\!10^{-4}$ Eh\,a$_0^{-1}$). Both batches lie inside the same convergence baseline (all gnorm $<\!10^{-3}$ Eh\,a$_0^{-1}$), but they used distinct optimization protocols and we therefore describe the cohort as a two-batch composite rather than a methodologically uniform sample. Cross-geometry stability was verified only on a single parser-recovered reproduction of \texttt{Hz\_DMAC1\_NPh21\_CF31} (Phase 1 sanity: the new pipeline recovers the historical SCS-CC2 $\Delta E_\mathrm{ST}=-\SI{220.33}{meV}$ to all 7 printed decimals; the raw output files are not file-level identical between the historical and re-run batches but the parsed energies agree to the printed precision); a broader cross-geometry sensitivity sweep across multiple cohort members is deferred to future work and discussed as a scope limitation in \S\ref{sec:limits}. nexc was set to 5 for singlet and 3 for triplet excited states throughout, except for \texttt{Hz\_NPh23} where state-5 convergence required reducing nexc to 2 for the singlet block (S$_1$ and S$_2$ unchanged; the S$_1$ value used for $\Delta E_\mathrm{ST}$ is independent of higher-state requests because of the eigensolver structure). All Turbomole executions used the v2 wrapper script (\texttt{templates/run\_scscc2\_svp\_v2.slurm}) which performs idempotent stage-skip restart, auto-clean of intermediate CC* scratch files, and rejects scheduler auto-requeue. The final validation table was generated directly from parsed result summaries (\texttt{parsers/parse\_scscc2\_dest.py}) rather than from manually transcribed values. Scheduler provenance for all 13 SCS-CC2 jobs is \emph{runtime-banner-supported} rather than \emph{scheduler-log-confirmed}: each \texttt{ricc2.out} contains a compute-node hostname banner of the form \texttt{ricc2 (node$N$)} (never \texttt{master}/\texttt{login}/\texttt{head}/\texttt{submit}/\texttt{frontend}) intrinsic to the Turbomole output and not retroactively editable without breaking internal consistency, but the per-job Slurm stdout (\texttt{slurm-<jobid>.out}) was not preserved alongside the \texttt{ricc2} outputs in the local audit snapshot.
+
+\subsection{Delta Transfer Learning}
+
+The transfer workflow follows the implementation in \texttt{scripts/p0a\_ablation\_fixed.py}. A source XGBoost regressor\cite{Chen2016} is trained once on the 446 Pollice molecules using the 54 features shared between source and target domains. A second XGBoost model then learns the target-domain residual,
+\begin{equation}
+  y_\mathrm{target}-\hat{y}_\mathrm{source},
+\end{equation}
+under leave-one-out cross-validation (LOO-CV) on the target set. The residual model receives the shared features, the source prediction, and, when specified, target-domain physics descriptors.
+
+The implemented feature-study design is slightly subtler than a naive reading suggests. Six ablation configurations were computed in the reproducible output files, but one of them (\texttt{no\_stda\_no\_ksod}) is redundant with the principal comparisons because the sTDA feature block is absent from the final 33-molecule target table. Accordingly, Figure~\ref{fig:ablation} summarizes the non-redundant comparisons that matter for interpretation: \texttt{full}, \texttt{no\_stda}, \texttt{no\_ksod}, \texttt{no\_dft}, and \texttt{rdkit\_only}. The target-domain augmentation block contains DFT orbital-energy and KS-OD-style descriptors computed during project preprocessing, whereas the shared block is RDKit-based.
+
+\subsection{Uncertainty Quantification and Active Learning}
+
+Split conformal prediction\cite{Vovk2005} was evaluated with the corrected train/calibration/test design used in \texttt{scripts/p0b\_conformal\_prediction.py}: 19 pre-round-1 molecules form the calibration set and 14 round-1 deployment molecules form the OOD test set. Hz\_NH23 is excluded from the UQ test because it is treated separately as a Grubbs outlier in the project analyses. Bootstrap uncertainty uses 10 resampled XGBoost ensembles and reports interval widths via the ensemble standard deviation.
+
+Four uncertainty-diagnostic experiments were added to localise the failure mode of the global split conformal prediction on the 14-molecule deployment subset. (i) Distance-to-calibration: per-test-molecule Tanimoto distance (Morgan fingerprints, radius 2, 2048 bits) to the nearest calibration neighbour, correlated against per-molecule conformal nonconformity score on the test set. (ii) Distance-to-source: per-target-molecule $k$-nearest-neighbour ($k=5$) Tanimoto distance to the 446-molecule Pollice ADC(2) source training set, correlated against $|\text{residual}|$, following the nUNC applicability-domain construction of Whitehead et al.\cite{Whitehead2026} (iii) Scaffold-conditional Mondrian conformal prediction\cite{Bostrom2020}: separate calibration quantile per scaffold bucket (Hz, 5AP, other) with the finite-sample rank correction $\lceil(n+1)\alpha\rceil$. (iv) Tanimoto-weighted locally-adaptive split conformal: per-test-molecule weighted upper-tail quantile of the calibration nonconformity scores with weights $w_i \propto (T(\mathbf{f}_t,\mathbf{f}_{c_i})+\varepsilon)^{\beta}$ swept over $\beta \in \{0,1,2,4\}$ and nominal level $\alpha \in \{0.80, 0.90, 0.95\}$. Implementations are in \texttt{scripts/diag\_distance\_nonconformity.py}, \texttt{scripts/diag\_distance\_to\_source.py}, \texttt{scripts/diag\_mondrian\_coverage.py}, and \texttt{scripts/diag\_local\_conformal.py}; outputs are written to \texttt{results/diagnostics/} and to per-figure caption-data JSONs. Locally-weighted CP is applied here as a heuristic recalibration; formal coverage guarantees in this regime would require the density-ratio formalism of Tibshirani et al.\cite{Tibshirani2019}, which is beyond the scope of the present demonstration.
+
+Round-1 active learning selected 15 molecules using a four-bucket acquisition heuristic combining model uncertainty, near-zero predictions, oscillator-strength prioritization, and feature-space outliers. Statistical evaluation of active learning versus baseline strategies follows the project scripts \texttt{task2\_baseline\_significance.py} and \texttt{stats\_validation.py}.
+
+\subsection{Final Classification}
+
+The final candidate table uses the rules encoded in \texttt{scripts/build\_validated\_master.py}. Molecules with $\Delta E_\mathrm{ST}<-\SI{30}{meV}$ are labeled as negative-gap, those with $f_\mathrm{osc}<0.001$ and $\Delta E_\mathrm{ST}<-\SI{30}{meV}$ as dark negative-gap, those with $|\Delta E_\mathrm{ST}|\leq\SI{30}{meV}$ as borderline, and the rest as positive-gap. The \texttt{confidence} field is a descriptive evidence label rather than a probabilistic guarantee: borderline or contradictory cases remain low, while classifications outside the borderline window are reported as medium. One heptazine that is borderline by ADC(2) is promoted in the final decision table because the available SCS-CC2 result lies well outside the borderline window; the original ADC(2) value is retained in the generated results table for traceability.
+
+
+% ============================================================================
+\section{Results and Discussion}
+% ============================================================================
+
+\subsection{Post-Round Transfer Is Useful within the Target Domain, but Deployment Remains Hard}
+
+On the 33-molecule post-round target set, the delta transfer model reaches a LOO-CV MAE of \SI{52.1}{meV}, an RMSE of \SI{66.9}{meV}, 78.8\% sign accuracy, and 54.5\% recall for negative-gap molecules. Relative to the pre-round 19-molecule target set, the retrospective MAE decreases from \SI{77.5}{meV} to \SI{52.1}{meV}. The main methodological point is therefore not that the model has solved INVEST ranking, but that a residual correction trained on a small target-domain sample can translate a larger historical corpus into a materially better within-domain predictor. The \SI{52.1}{meV} post-round LOO-CV MAE exceeds the \SI{30}{meV} borderline classification window, however, so the model is informative for scaffold-level prioritization and coarse within-domain correction rather than for confident near-threshold candidate-level classification.
+
+That gain does not transfer unchanged to newly queried structures. On the genuinely held-out round-1 deployment set, the same project output gives an MAE of \SI{101.5}{meV}, sign accuracy of 60\%, and negative-gap recall of 28.6\%. The contrast between the 33-molecule post-round LOO-CV result and the 15-molecule deployment benchmark is scientifically important: it shows that the closed-loop protocol can improve target-domain fit while still facing a harder transfer problem on the chemical-space shift created by active acquisition. This separation between \emph{within-domain correction} and \emph{deployment behavior} is one of the main distinctions between the present study and single-level retrospective screens.
+
+\subsection{Target-Domain Physics Descriptors Do Not Improve the 33-Molecule Residual Model}
+
+The ablation results are numerically identical across all 10 nominal random seeds because the implemented LOO-CV workflow is effectively deterministic for this dataset. The full feature configuration yields \SI{54.9}{meV} MAE, whereas the RDKit-only configuration yields \SI{52.1}{meV}, a difference of \SI{2.8}{meV}. Removing DFT features improves the MAE to \SI{53.2}{meV}, and removing KS-OD features improves it to \SI{52.3}{meV}. The \texttt{full} and \texttt{no\_stda} configurations are identical because the final target table does not contain usable sTDA features.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig1_ablation.pdf}
+  \caption{Ablation summary for the delta correction model. The RDKit-only configuration gives the lowest MAE among the non-redundant feature sets, and the deterministic seed outcomes show that the observed ordering reflects the data split itself rather than seed-to-seed variation.}
+  \label{fig:ablation}
+\end{figure}
+
+The mechanistic interpretation is narrower than a generic ``physics features do not work'' statement. In this dataset, the source-model prediction plus the shared RDKit block already capture most of the scaffold-level variation that the 33 target labels can resolve. Adding target-domain orbital and KS-OD-style descriptors increases feature-space complexity without exposing a commensurate gain in predictive structure. Because the preference for RDKit-only is only \SI{2.8}{meV}, the result should be read as a data-regime statement: for this target-set size, the added physics block is unnecessary, not universally uninformative.
+
+\subsection{Uncertainty Quantification as an Auxiliary Diagnostic}
+
+We report split conformal and bootstrap uncertainty estimates on the 14-molecule round-1 deployment subset (Hz\_NH23 excluded by design) as an auxiliary check rather than as a candidate-level decision tool. At the 95\% nominal level, split conformal prediction covers 5/14 = 35.7\% of test molecules (binomial 95\% Wilson CI $[16.3\%, 61.2\%]$) with mean intervals of \SI{53}{meV}, while bootstrap ensembles attain 100\% coverage at mean intervals of \SI{324}{meV} that are practically equivalent to a naive \SI{320}{meV} fixed-width baseline.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig2_uq_shift.pdf}
+  \caption{Split conformal and bootstrap uncertainty quantification on the 14-molecule round-1 deployment subset (Hz\_NH23 excluded by design). At the 95\% nominal level, split conformal prediction achieves 35.7\% empirical coverage (5/14, Wilson 95\% CI [16.3\%, 61.2\%]); bootstrap ensembles attain 100\% coverage but only with \SI{324}{meV} mean intervals, comparable to a naive \SI{320}{meV} fixed-width baseline.}
+  \label{fig:uq}
+\end{figure}
+
+We pursued the diagnosis of split-conformal under-coverage in detail (four follow-on experiments combining Tanimoto applicability metrics, Mondrian, and locally-weighted conformal\cite{Bostrom2020,Whitehead2026,Tibshirani2019,Vovk2005}); the upshot is that the binding constraint at this scale is the calibration sample size ($n_\text{calib}=19$) rather than the choice of conformal variant, and the workflow's discovery decisions therefore rest on the scaffold-resolved AL signal and on hierarchical SCS-CC2 cross-checks (\S\ref{sec:al}, \S\ref{sec:val}) rather than on the conformal interval. Detailed diagnostic figures and numbers are deferred to the \emph{Limitations and Future Work} discussion (\S\ref{sec:limits}); per-figure metadata is in \texttt{figures/caption\_data/diag\_*.json}.
+
+\subsection{Scaffold-Resolved Active Learning}\label{sec:al}
+
+Round-1 active learning targets scaffold-level decisions, not candidate-level hit-rate competition. Operating under a four-bucket acquisition heuristic that balances uncertainty, near-zero predictions, oscillator strength, and feature-space outliers, it spends 15 queries to deliver an unambiguous scaffold-level outcome: every one of the five queried 5-aminopyrimidines turns out to be a positive-gap molecule with $\Delta E_\mathrm{ST}\geq+\SI{171}{meV}$, and across the full 35-molecule validated cohort all 13 negative or dark negative-gap classifications fall within the heptazine scaffold (Hz 13/27 vs.\ non-Hz 0/8; two-sided Fisher exact $p=0.015$, reported as a descriptive contrast within the actively selected cohort). Within the 14-molecule round-1 Fisher subset (Hz\_NH23 excluded by design) the Hz-versus-5AP contingency is 6/9 vs.\ 0/5 ($p=0.031$, same descriptive caveat). The acquisition strategy is therefore not framed as a candidate-level hit-rate advantage over scaffold-aware priors\textemdash{}the per-baseline one-sided permutation $p$ values are $\geq 0.97$ in the project output\textemdash{}but as a decisive scaffold-pruning device that, in 15 queries, eliminates the 5AP branch from the active design space.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Fig5_al_value.pdf}
+  \caption{Scaffold-level interpretation of active learning. Panel (a) uses the full 35-molecule validated cohort: all 13 negative or dark negative-gap classifications (RI-ADC(2)/def2-SVP level) occur in the heptazine subset (Hz 13/27 vs non-Hz 0/8; two-sided Fisher exact $p=0.015$, descriptive). Panel (b) uses the 14-molecule Fisher/conformal subset obtained by excluding Hz\_NH23; within this subset the Hz-versus-5AP contingency is 6/9 versus 0/5 ($p=0.031$, descriptive subset statistic on a selected cohort). Round-1 deployment yield is 7 out of 15 queried molecules; the panel-b denominator is 14, not 15, and the two panels must not be numerically conflated.}
+  \label{fig:al}
+\end{figure}
+
+The learning-curve improvement from \SI{77.5}{meV} pre-round to \SI{52.1}{meV} post-round is numerically encouraging, but the paired Wilcoxon test on the original 19 molecules gives $p=0.332$. The model-update effect is therefore directional rather than decisive in a statistical sense. By contrast, the scaffold-level inference is more direct: the 5AP branch is not merely lower-yield than heptazine; in the queried subset it is uniformly far from the inversion threshold. This reframing is important for novelty claims. The active-learning contribution here is not a universal acquisition policy that dominates all baselines, but a chemically useful strategy for shrinking the region of the design space that still warrants expensive validation.
+
+\subsection{Hierarchical Validation: ADC(2) Primary, SCS-CC2 on Lead Candidates}\label{sec:val}
+
+The validation tier of the workflow is hierarchical: ADC(2)/def2-SVP is the primary post-Hartree--Fock label across all 35 molecules (10 negative-gap, 3 dark negative-gap, 1 borderline, 21 positive-gap), and SCS-CC2/def2-SVP is deployed across all 13 negative-or-dark-negative-gap candidates as a population-level higher-level cross-check, while the 21 positive-gap candidates and 1 borderline-near-zero entry retain only the ADC(2) label. The thirteen-molecule SCS-CC2 audit confirms sign agreement with ADC(2) in all 13 cases (0 sign disagreement; because the 13 molecules are not an i.i.d.\ sample but a cohort pre-screened to be ADC(2) INVEST candidates, we report the one-sided 95\% rule-of-three upper bound on the within-screen sign-disagreement rate as $3/13 \approx 0.23$ rather than a Clopper--Pearson lower bound on a population proportion). The audit also promotes one ADC(2)-borderline heptazine (\texttt{Hz\_POZ1\_NPh21\_CF31}: $-\SI{9.7}{meV}$ by ADC(2)/def2-SVP, $-\SI{165.6}{meV}$ by SCS-CC2/def2-SVP) into the negative-gap class. We caution that one cohort member, \texttt{Hz\_NPh21\_Cz2}, sits at the narrowest cross-method margin (ADC(2) $\Delta E_\mathrm{ST}=-\SI{119.0}{meV}$, SCS-CC2 $-\SI{129.1}{meV}$, difference $\SI{10.1}{meV}$), comparable to typical SCS-CC2 uncertainty for these systems, and is the most likely sign-flip candidate under further method change. The cohort is a two-batch composite: 4 historical SCS-CC2 jobs (Hz\_NH23, Hz\_DMAC1\_NPh21\_CF31, Hz\_NPh22\_SO2Ph1, Hz\_POZ1\_NPh21\_CF31) reused the xtb-optimized geometries from the corresponding ADC(2) calculations (gnorm $6.6\!\times\!10^{-5}$ to $7.6\!\times\!10^{-4}$ Eh\,a$_0^{-1}$); 9 new SCS-CC2 jobs used independently re-converged $\delta$-DFT xtb geometries (gnorm $5.6\!\times\!10^{-5}$ to $1.5\!\times\!10^{-4}$). Both batches lie inside the same convergence baseline (all gnorm $<\!10^{-3}$). Cross-geometry stability was checked on a single reproduction of \texttt{Hz\_DMAC1\_NPh21\_CF31}, where the new pipeline recovers the historical SCS-CC2 $\Delta E_\mathrm{ST}=-\SI{220.33}{meV}$ to the printed precision of the parsed energy (within $0.1$\,meV; the raw output files themselves are not file-level identical, Phase~1 sanity, see Methods); a broader cross-geometry sensitivity audit is out of scope and is noted as future work in \S\ref{sec:limits}. Because $|\Delta E_\mathrm{ST}^\mathrm{ADC(2)/def2\text{-}SVP}| < \SI{30}{meV}$ for that molecule sits inside the basis-set sensitivity window for near-zero gaps, the promotion rests on the SCS-CC2 sign and the entry is kept at low evidence strength in Table~\ref{tab:invest_candidates} pending an independent basis-set check (see \S\ref{sec:limits}). All 13 negative or dark negative-gap classifications fall within the heptazine scaffold; the validated set comprises 27 Hz, 6 5AP, and 2 BN-containing molecules.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{Fig3_classification.pdf}
+  \caption{Final decision landscape for the 35 validated molecules. All 13 ADC(2)-screened INVEST candidates additionally have SCS-CC2 cross-checks (0 within-screen sign disagreement), and one heptazine is promoted from the ADC(2) borderline window by the higher-level result stored in the validated decision table.}
+  \label{fig:classification}
+\end{figure}
+
+\IfFileExists{Table1_invest_candidates.tex}{\input{Table1_invest_candidates.tex}}{\IfFileExists{results/Table1_invest_candidates.tex}{\input{results/Table1_invest_candidates.tex}}{\input{../results/Table1_invest_candidates.tex}}}
+
+Operationally, the thirteen SCS-CC2 cross-checks deliver three pieces of evidence that the workflow needs at this stage: (i) sign-level confirmation of the ADC(2)/def2-SVP classifications for every INVEST candidate (0 sign disagreement in the screened cohort), (ii) one direct rescue of an ADC(2)-borderline heptazine via the higher-level result, and (iii) a quantitative scale for the residual method dependence. On point (iii), all 13 SCS-CC2 $\Delta E_\mathrm{ST}$ values are systematically more negative than the corresponding ADC(2) values (absolute differences \SIrange{10}{194}{meV}, mean \SI{110}{meV}, median \SI{101}{meV}). The monotonic direction of this shift is consistent with the known tendency of spin-component scaling to amplify the doubles correction asymmetrically for low-lying spin-flipped excited states in extended $\pi$-conjugated heptazines,\cite{Hellweg2008,Tajti2009} so the result should be read as method-family consistency within the ADC(2)/CC2 hierarchy rather than as method-independent confirmation against an unrelated theory level (e.g., CCSD, CC3, NEVPT2). This sets the resolution at which the present pipeline can claim ranking, namely sign / scaffold level rather than meV-precise ranking among the most negative-gap heptazines. Extending the higher-level audit to all 13 INVEST candidates --- rather than the original 4-molecule pilot --- converts the cross-method statistic from a small lead-set spot-check into a per-molecule confirmation of sign for the entire pre-screened shortlist; a method-triangulation tier (CCSD or CC3 on a small subset) is identified as a natural next step in \S\ref{sec:limits}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{Fig4_crosscheck.pdf}
+  \caption{Cross-method comparison for the 13 ADC(2)-screened INVEST candidates that received both ADC(2)/def2-SVP and SCS-CC2/def2-SVP validation. SCS-CC2 reproduces the negative sign in all 13 cases (0 disagreement; the 13 molecules are not an i.i.d.\ sample but a cohort pre-screened to be INVEST, so we report the one-sided 95\% rule-of-three upper bound on within-screen sign-disagreement rate as $\approx 0.23$ rather than a Clopper--Pearson lower bound). All 13 SCS-CC2 values are systematically more negative than ADC(2) (\SIrange{10}{194}{meV} deeper, mean \SI{110}{meV}); this monotonic shift indicates method-family consistency within ADC(2)/CC2 rather than method-independent confirmation against an unrelated theory level. Marker color denotes batch (historical, Phase~2.2 extension, Phase~2.4 extension).}
+  \label{fig:crosscheck}
+\end{figure}
+
+Hz\_NH23 anchors the deep end of the heptazine class within the workflow ($-\SI{383}{meV}$ by ADC(2)/def2-SVP, $-\SI{558}{meV}$ by SCS-CC2/def2-SVP); its oscillator strength is effectively zero, so we retain it in the validated table as a dark negative-gap mechanistic endpoint rather than as an emitter candidate. The combination of decisive scaffold elimination, per-candidate SCS-CC2 sign confirmation across all 13 ADC(2)-screened INVEST candidates, and explicit retention of dark cases as separate classifications gives the present workflow its specific contribution to low-data INVEST discovery.
+
+
+% ============================================================================
+\section{Scope of Applicability and Limitations}\label{sec:limits}
+% ============================================================================
+
+The scope of the present workflow is defined by the scale of the available evidence and is by design tuned for scaffold-level prioritization rather than for fine candidate-level ranking. First, the low-level calibration rests on five anchor molecules and is used as a coarse screening device rather than a precise predictor (an empirical fit, $N=5$, with goodness-of-fit reported in the Supporting Information). Second, the post-round LOO-CV MAE of \SI{52.1}{meV} is appropriate for the workflow's intended scaffold-pruning role; it does not target candidate-level discrimination within the \SI{30}{meV} borderline window, and we accordingly route near-threshold heptazines into the SCS-CC2 cross-check tier rather than relying on the ML interval alone. Third, the OOD UQ benchmark uses 19 calibration molecules and 10 bootstrap resamples; on this small calibration set the standard split-conformal rank $\lceil(n+1)\alpha\rceil$ at $\alpha=0.95$ equals $n_\text{calib}=19$, pinning the conformal quantile to the maximum calibration nonconformity score irrespective of any reweighting scheme\cite{Vovk2005}, and four follow-on diagnostics (Tanimoto distance to calibration and to the 446-molecule Pollice source\cite{Whitehead2026}, scaffold-conditional Mondrian conformal\cite{Bostrom2020}, and Tanimoto-weighted locally-adaptive split conformal\cite{Tibshirani2019}) are recorded as supporting material in \texttt{results/diagnostics/} and \texttt{figures/diag\_*.pdf}; locally-weighted CP yields a descriptive monotone improvement at lower nominal levels and is reported as a partial-recovery option for future work. Fourth, the feature-ablation outcome is best described as a reproducible numerical preference for the RDKit-only model, not as a conventionally powered significance statement, because the LOO-CV residuals are deterministic across the 10 nominal seeds (paired Wilcoxon $p_\text{eff}=1$ for the relevant comparisons). Fifth, the SCS-CC2 cross-check is now extended to all 13 ADC(2)-screened INVEST candidates and provides a per-molecule sign confirmation across the pre-registered negative-gap shortlist (0 sign disagreement). Three caveats are explicit. (a) The 13 molecules are an ADC(2)-pre-screened cohort, not an i.i.d.\ random sample; we therefore report the one-sided 95\% rule-of-three upper bound on within-screen sign-disagreement rate ($\approx 0.23$) rather than a Clopper--Pearson lower bound on a population proportion. (b) All 13 SCS-CC2 results are systematically more negative than ADC(2) (\SIrange{10}{194}{meV} deeper, mean \SI{110}{meV}); this monotonic shift suggests SCS-scaling-driven amplification of the doubles correction for these spin-flipped low-lying states\cite{Hellweg2008,Tajti2009} rather than method-independent confirmation, and we therefore frame the audit as ADC(2)/CC2 method-family consistency. An independent triangulation tier (CCSD, CC3, or NEVPT2 on a small subset) is identified here as future work. (c) The narrowest cross-method margin, \texttt{Hz\_NPh21\_Cz2} ($\Delta\Delta E_\mathrm{ST}=\SI{10}{meV}$), is comparable to typical SCS-CC2 uncertainty and is the most likely sign-flip candidate under further method change. In particular, \texttt{Hz\_POZ1\_NPh21\_CF31} (with $|\Delta E_\mathrm{ST}^\text{ADC(2)/def2-SVP}|=\SI{9.7}{meV}$ inside the basis-set sensitivity window for near-zero gaps) carries a provisional classification pending an independent ADC(2) or SCS-CC2 calculation at def2-TZVP. The SCS-CC2/def2-SVP basis assignment for this molecule was confirmed directly from the \texttt{ricc2} runtime banner (both \texttt{\$basis} one-electron and \texttt{\$cbas} auxiliary blocks print as def2-SVP for all five elements); the Turbomole control file for this historical batch was not preserved alongside the output, so the basis evidence is banner-derived rather than control-file-derived. The cohort is also a two-batch composite (4 historical SCS-CC2 jobs on \texttt{adc2\_batch2\_final} geometries + 9 new SCS-CC2 jobs on $\delta$-DFT geometries; both batches with all xtb gnorm $<\!10^{-3}$ Eh\,a$_0^{-1}$), and a broader cross-geometry sensitivity sweep was deferred; pipeline equivalence was verified only on a single Phase~1 sanity reproduction of \texttt{Hz\_DMAC1\_NPh21\_CF31}. Spin--orbit and reverse intersystem crossing rates were not computed here; the INVEST classifications reported below are electronic-structure assignments at the ADC(2)/def2-SVP level (with selected SCS-CC2 cross-checks), not predictions of emitter performance. Finally, the chemical conclusions are framed at the resolution that the current evidence supports: scaffold-level elimination of 5AP, scaffold-level retention of Hz, and per-molecule sign confirmation of all 13 ADC(2)-screened INVEST candidates at the same theory family (SCS-CC2/def2-SVP, within the ADC(2)/CC2 hierarchy).
+
+
+% ============================================================================
+\section{Conclusions}
+% ============================================================================
+
+This work presents a scaffold-resolved active-learning and hierarchical-validation workflow for low-data INVEST discovery, anchored on a 155-molecule design library and a single round of deployment that combines a 446$\rightarrow$33 cross-level $\Delta$-ML transfer model with a tiered ADC(2)/SCS-CC2 validation protocol. Two conclusions follow directly from the computed results.
+
+First, scaffold-resolved active learning is an efficient pruning device for low-data INVEST campaigns: 15 carefully chosen queries are sufficient to eliminate the 5-aminopyrimidine scaffold and to lock attention on the heptazine subset (Hz vs.\ non-Hz contingency 13/27 vs.\ 0/8 across the full 35-molecule validated cohort, two-sided Fisher exact $p=0.015$, descriptive on the actively selected cohort). The transfer model's role within this design is scaffold-level prioritization, and the post-round LOO-CV improvement from \SI{77.5}{meV} to \SI{52.1}{meV} ($n=33$ excluding Hz\_NH23) is consistent with that role.
+
+Second, hierarchical validation makes the higher-level cost concentrate where it matters most: ADC(2)/def2-SVP serves as the primary post-Hartree--Fock label across all 35 molecules, while SCS-CC2/def2-SVP is deployed across all 13 ADC(2)-screened INVEST candidates (the pre-registered Table~1 shortlist) and confirms sign agreement in all 13 cases (0 within-screen disagreement; one-sided 95\% rule-of-three upper bound on the disagreement rate $\approx 0.23$), with one ADC(2)-borderline heptazine promoted to negative-gap by the higher-level result. All 13 SCS-CC2 values are systematically more negative than ADC(2) (\SIrange{10}{194}{meV} deeper, mean \SI{110}{meV}); we therefore frame the audit as ADC(2)/CC2 method-family consistency rather than method-independent confirmation, and identify an independent-family triangulation (CCSD, CC3, or NEVPT2 on a small subset) as the natural next validation step.
+
+Together, these two contributions define a low-data discovery recipe: cheap ML for scaffold elimination, expensive correlated-wavefunction theory only for sign confirmation on the small surviving lead set. Auxiliary UQ analyses (split conformal and bootstrap intervals on the 14-molecule round-1 deployment subset) are reported alongside the primary workflow as diagnostics rather than as candidate-level decision tools, with the diagnostic detail and recalibration explorations collected in \S\ref{sec:limits} and the supporting \texttt{results/diagnostics/} files.
+
+
+% ============================================================================
+\section*{Data and Code Availability}
+% ============================================================================
+
+The canonical code and data repository for this work is
+\href{https://github.com/lengcan276/INVEST-n13}{\texttt{https://github.com/lengcan276/INVEST-n13}}.
+Processed validation tables (\texttt{results/validated\_candidates\_master.csv},
+\texttt{results/cross\_check\_n13.csv}), canonical metrics
+(\texttt{results/canonical\_metrics.json}), figure caption metadata
+(\texttt{figures/caption\_data/*.json}) are included in the release.
+
+Raw Turbomole \texttt{ricc2} outputs for the SCS-CC2/def2-SVP cross-check
+cohort (n=13 molecules, singlet and triplet outputs) are locally
+verified end-to-end against the parsed values to the precision of the
+reported digits; they are deposited in a separate raw-archive tarball
+released alongside the code repository, with a sha256 manifest.
+
+Raw outputs for the ADC(2)/def2-SVP validation set (35 molecules,
+singlet + triplet = 70 files) are partially included in the present
+release. Twenty raw outputs (12 fully verified to the precision of the
+reported digits and 8 verified to within sub-meV rounding-level
+differences with the residual attributed entirely to processed-table
+rounding to 3~decimals in~eV) are locally raw-verified. The remaining 15 ADC(2) raw outputs
+were computed on the \texttt{ybsi} compute cluster and were not rsynced
+into the local audit snapshot at the time of submission; they will be
+added to the raw-archive tarball in a subsequent point release. Their
+absence does not affect any manuscript numeric claim, because the
+post-processed values in \texttt{validated\_candidates\_master.csv}
+are the audit-trace authoritative source and the SCS-CC2 sign-retention
+result (the headline 13/13 claim) is established entirely from the
+n=13 SCS-CC2 cohort that \emph{is} fully raw-verified locally.
+
+
+% ============================================================================
+% References
+% ============================================================================
+
+\begin{thebibliography}{30}
+
+\bibitem{Hund1925}
+Hund, F. \textit{Z. Phys.} \textbf{1925}, \textit{33}, 345--371.
+
+\bibitem{Kutzelnigg1996}
+Kutzelnigg, W. In \textit{Theoretical Models of Chemical Bonding}; Maksic, Z. B., Ed.; Springer: Berlin, 1996; pp 1--43.
+
+\bibitem{Ehrmaier2019}
+Ehrmaier, J.; Rabe, E. J.; Pristash, S. R.; Corp, K. L.; Schlenker, C. W.; Sobolewski, A. L.; Domcke, W. \textit{J. Phys. Chem. A} \textbf{2019}, \textit{123}, 8099--8108.
+
+\bibitem{deSilva2019}
+de Silva, P. \textit{J. Phys. Chem. Lett.} \textbf{2019}, \textit{10}, 5674--5679.
+
+\bibitem{Ricci2021}
+Ricci, G.; San-Fabi\'{a}n, E.; Suzuki, Y.; Olsen, S. \textit{J. Phys. Chem. Lett.} \textbf{2021}, \textit{12}, 6223--6228.
+
+\bibitem{Pollice2021}
+Pollice, R.; Friederich, P.; Lavigne, C.; dos Passos Gomes, G.; Aspuru-Guzik, A. \textit{Matter} \textbf{2021}, \textit{4}, 1654--1682.
+
+\bibitem{Loos2021}
+Loos, P.-F.; Lipparini, F.; Boggio-Pasqua, M.; Scemama, A.; Jacquemin, D. \textit{J. Chem. Theory Comput.} \textbf{2021}, \textit{17}, 1231--1239.
+
+\bibitem{Loos2023}
+Loos, P.-F.; Colle, R.; Jacquemin, D. \textit{J. Chem. Theory Comput.} \textbf{2023}, \textit{19}, 3418--3431.
+
+\bibitem{Aizawa2022}
+Aizawa, N.; Pu, Y.-J.; Harabuchi, Y.; Ohba, A.; Maeda, S.; Sasabe, H.; Kido, J. \textit{Nature} \textbf{2022}, \textit{609}, 502--506.
+
+\bibitem{Omar2023}
+Omar, \"{O}. H.; Xie, X.; Troisi, A.; Padula, D. \textit{J. Am. Chem. Soc.} \textbf{2023}, \textit{145}, 19790--19799.
+
+\bibitem{SanzRodrigo2024}
+Jorner, K. \textit{J. Phys. Chem. A} \textbf{2024}, \textit{128}, 2445--2456.
+
+\bibitem{Ramakrishnan2015}
+Ramakrishnan, R.; Dral, P. O.; Rupp, M.; von Lilienfeld, O. A. \textit{J. Chem. Theory Comput.} \textbf{2015}, \textit{11}, 2087--2096.
+
+\bibitem{Smith2019}
+Smith, J. S.; Nebgen, B. T.; Zubatyuk, R.; Lubbers, N.; Devereux, C.; Barber, K.; Walshe, J. K.; Ohnishi, H.; Isayev, O.; Roitberg, A. E. \textit{Nat. Commun.} \textbf{2019}, \textit{10}, 2903.
+
+\bibitem{Dral2020}
+Dral, P. O. \textit{J. Phys. Chem. Lett.} \textbf{2020}, \textit{11}, 2336--2347.
+
+\bibitem{Musil2019}
+Musil, F.; De, S.; Yang, J.; Campbell, J. E.; Day, G. M.; Ceriotti, M. \textit{Chem. Sci.} \textbf{2019}, \textit{10}, 503--510.
+
+\bibitem{Vovk2005}
+Vovk, V.; Gammerman, A.; Shafer, G. \textit{Algorithmic Learning in a Random World}; Springer: New York, 2005.
+
+\bibitem{Riniker2015}
+Riniker, S.; Landrum, G. A. \textit{J. Chem. Inf. Model.} \textbf{2015}, \textit{55}, 2562--2574.
+
+\bibitem{Bannwarth2019}
+Bannwarth, C.; Ehlert, S.; Grimme, S. \textit{J. Chem. Theory Comput.} \textbf{2019}, \textit{15}, 1652--1671.
+
+\bibitem{Neese2020}
+Neese, F.; Wennmohs, F.; Becker, U.; Riplinger, C. \textit{J. Chem. Phys.} \textbf{2020}, \textit{152}, 224108.
+
+\bibitem{TURBOMOLE2024}
+TURBOMOLE V7.5.1 2024, a development of University of Karlsruhe and Forschungszentrum Karlsruhe GmbH, 1989--2024, TURBOMOLE GmbH, available from \url{https://www.turbomole.org}.
+
+\bibitem{Chen2016}
+Chen, T.; Guestrin, C. In \textit{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}; ACM: New York, 2016; pp 785--794.
+
+\bibitem{Bostrom2020}
+Bostr\"{o}m, H.; Johansson, U. In \textit{Proceedings of the Ninth Symposium on Conformal and Probabilistic Prediction and Applications}; PMLR: 2020; Vol. 128, pp 114--133.
+
+\bibitem{Tibshirani2019}
+Tibshirani, R. J.; Foygel Barber, R.; Cand\`{e}s, E.; Ramdas, A. In \textit{Advances in Neural Information Processing Systems}; 2019; Vol. 32.
+
+\bibitem{Whitehead2026}
+Whitehead, T. M.; Tordesillas, A.; Bender, A. \textit{ACS Omega} \textbf{2026}, accepted; Explicit Applicability Domain Calculations Can Help Determine When Uncertainty Estimates Are Less Reliable.
+
+\end{thebibliography}
+
+\end{document}

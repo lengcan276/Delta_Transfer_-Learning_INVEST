@@ -1,0 +1,19 @@
+{
+  "mol_id": "Hz_NH23",
+  "dest_ev": -0.38346000000000036,
+  "s1_ev": 3.82144,
+  "t1_ev": 4.2049,
+  "fosc": 0.0,
+  "hz_pool_mean_dest": -0.03025000000000006,
+  "hz_pool_std_dest": 0.07134196503461336,
+  "z_score": -4.950942966438218,
+  "grubbs_critical_n10_005": 2.29,
+  "grubbs_outlier": "True",
+  "notes": [
+    "\u0394EST = -0.384 eV is 3\u00d7 larger than next largest Hz INVEST",
+    "fosc = 0 suggests pure CT or symmetry-forbidden S1",
+    "T1 = 4.205 eV >> all other Hz T1 (max 3.606 eV)",
+    "Possible ADC(2)/def2-SVP artifact: T1 state-swap with higher triplet",
+    "Recommendation: DLPNO-CCSD(T)/def2-TZVP or CASSCF(10,10)/NEVPT2 verification"
+  ]
+}

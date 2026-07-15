@@ -1,0 +1,133 @@
+{
+  "figure_id": "Fig1_ablation",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "results/round1_eval/p0a_ablation_multiseed.csv",
+    "results/round1_eval/p0a_ablation_paired_tests.json",
+    "scripts/p0a_ablation_fixed.py"
+  ],
+  "sample_size": {
+    "n_seeds": 10,
+    "n_target_molecules": 33,
+    "n_configs": 6,
+    "evaluation": "LOO-CV on post-Round-1 target set (excludes Hz_NH23)"
+  },
+  "key_numbers": {
+    "configs": [
+      {
+        "config": "full",
+        "MAE_meV": 54.853,
+        "MAE_std_meV": 0.0,
+        "sign_accuracy": 0.7575757576,
+        "invest_recall": 0.4545454545,
+        "n_physics_features": 11,
+        "n_delta_features": 65
+      },
+      {
+        "config": "no_dft",
+        "MAE_meV": 53.165,
+        "MAE_std_meV": 0.0,
+        "sign_accuracy": 0.7272727273,
+        "invest_recall": 0.4545454545,
+        "n_physics_features": 3,
+        "n_delta_features": 57
+      },
+      {
+        "config": "no_ksod",
+        "MAE_meV": 52.326,
+        "MAE_std_meV": 0.0,
+        "sign_accuracy": 0.7575757576,
+        "invest_recall": 0.4545454545,
+        "n_physics_features": 8,
+        "n_delta_features": 62
+      },
+      {
+        "config": "no_stda",
+        "MAE_meV": 54.853,
+        "MAE_std_meV": 0.0,
+        "sign_accuracy": 0.7575757576,
+        "invest_recall": 0.4545454545,
+        "n_physics_features": 11,
+        "n_delta_features": 65
+      },
+      {
+        "config": "no_stda_no_ksod",
+        "MAE_meV": 52.326,
+        "MAE_std_meV": 0.0,
+        "sign_accuracy": 0.7575757576,
+        "invest_recall": 0.4545454545,
+        "n_physics_features": 8,
+        "n_delta_features": 62
+      },
+      {
+        "config": "rdkit_only",
+        "MAE_meV": 52.087,
+        "MAE_std_meV": 0.0,
+        "sign_accuracy": 0.7878787879,
+        "invest_recall": 0.5454545455,
+        "n_physics_features": 0,
+        "n_delta_features": 54
+      }
+    ],
+    "full_minus_rdkit_only_meV": 2.766,
+    "shared_rdkit_features": 54,
+    "paired_tests": {
+      "no_stda": {
+        "comparison": "full vs no_stda",
+        "p_value": 1.0,
+        "significant_005": false,
+        "deterministic_diff_eV": null,
+        "interpretation": "Removing features makes ZERO difference (identical across all 10 seeds)"
+      },
+      "no_ksod": {
+        "comparison": "full vs no_ksod",
+        "p_value": null,
+        "significant_005": null,
+        "deterministic_diff_eV": -0.0025269076151919964,
+        "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00253 eV. Wilcoxon not applicable (n_eff=1)."
+      },
+      "no_stda_no_ksod": {
+        "comparison": "full vs no_stda_no_ksod",
+        "p_value": null,
+        "significant_005": null,
+        "deterministic_diff_eV": -0.0025269076151919964,
+        "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00253 eV. Wilcoxon not applicable (n_eff=1)."
+      },
+      "no_dft": {
+        "comparison": "full vs no_dft",
+        "p_value": null,
+        "significant_005": null,
+        "deterministic_diff_eV": -0.0016880733894037436,
+        "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00169 eV. Wilcoxon not applicable (n_eff=1)."
+      },
+      "rdkit_only": {
+        "comparison": "full vs rdkit_only",
+        "p_value": null,
+        "significant_005": null,
+        "deterministic_diff_eV": -0.00276639637361082,
+        "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00277 eV. Wilcoxon not applicable (n_eff=1)."
+      }
+    }
+  },
+  "exclusions_or_filters": [
+    "Authoritative ablation source is scripts/p0a_ablation_fixed.py with results/round1_eval/p0a_ablation_multiseed.csv.",
+    "results/round1_eval/task3_ablation_results.csv is DEPRECATED (its source-target shared-coverage filter collapsed all configs to the same 54 RDKit features).",
+    "Physics-feature ablation removes features only from the target-domain delta-correction model; the source model always uses the shared RDKit feature set."
+  ],
+  "visualization_caveats": [
+    "LOO-CV is deterministic for this dataset: across all 10 seeds the per-config MAE is identical (MAE_std = 0). Seed count therefore does NOT imply independent stochastic variation.",
+    "Wilcoxon paired tests are reported for `no_stda` (p = 1.0, identical across seeds); the other comparisons collapse to n_eff = 1 deterministic differences and Wilcoxon is not applicable.",
+    "The full vs RDKit-only difference is +2.766 meV; this is within numerical noise and NOT statistically significant."
+  ],
+  "manuscript_claims_allowed": [
+    "RDKit-only and physics-augmented configurations differ by a few meV on the 33-molecule LOO-CV set; the differences are within numerical noise.",
+    "The ablation supports a conservative statement that the current physics descriptors did not produce a clear deployment-scale gain in this benchmark.",
+    "Report MAE values together with `n_target = 33, excl. Hz_NH23` and `n_seeds = 10, deterministic LOO-CV (std = 0)`."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not describe the 2.8 meV (or any sub-5 meV) full-vs-RDKit-only gap as statistically significant.",
+    "Do not report a Wilcoxon p-value for any comparison labeled `p_value: null` in paired_tests (those are deterministic, n_eff = 1).",
+    "Do not cite results from results/round1_eval/task3_ablation_results.csv or its derivatives.",
+    "Do not claim that adding the current physics features unequivocally improves accuracy."
+  ]
+}

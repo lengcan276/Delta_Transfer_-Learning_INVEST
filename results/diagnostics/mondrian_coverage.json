@@ -1,0 +1,69 @@
+{
+  "experiment_id": "diag_C_mondrian_coverage",
+  "method": "Mondrian (scaffold-conditional) split-conformal regressor with finite-sample quantile correction (rank = ceil((n+1)*alpha)).",
+  "nominal_coverage": 0.95,
+  "scaffold_buckets": [
+    "Hz",
+    "5AP",
+    "other"
+  ],
+  "global_reference": {
+    "q_hat_eV": 0.0266775010490416,
+    "q_hat_meV": 26.6775010490416,
+    "coverage": 0.35714285714285715,
+    "covered_over_n": "5/14",
+    "wilson_95_ci": [
+      0.1634473175355414,
+      0.612355768960926
+    ]
+  },
+  "buckets": {
+    "Hz": {
+      "n_calib": 16,
+      "n_test": 9,
+      "q_hat_meV": 23.853,
+      "coverage": 0.2222,
+      "covered_over_n": "2/9",
+      "wilson_95_ci": [
+        0.0632,
+        0.5474
+      ]
+    },
+    "5AP": {
+      "n_calib": 1,
+      "n_test": 5,
+      "q_hat_meV": 2.885,
+      "coverage": 0.0,
+      "covered_over_n": "0/5",
+      "wilson_95_ci": [
+        0.0,
+        0.4345
+      ]
+    },
+    "other": {
+      "n_calib": 2,
+      "n_test": 0,
+      "q_hat_meV": 26.678,
+      "coverage": null,
+      "covered_over_n": "n/a",
+      "wilson_95_ci": [
+        null,
+        null
+      ]
+    }
+  },
+  "mondrian_aggregate": {
+    "coverage": 0.14285714285714285,
+    "coverage_pct": 14.3,
+    "covered_over_n": "2/14",
+    "wilson_95_ci": [
+      0.040093921271464966,
+      0.39941379496970353
+    ],
+    "wilson_95_ci_pct": [
+      4.0,
+      39.9
+    ]
+  },
+  "interpretation": "Mondrian buckets reveal whether the global 35.7% under-coverage is uniform or scaffold-driven. A bucket with very different coverage from the global aggregate is a candidate for scaffold-aware re-calibration. With these small calibration buckets, all coverage estimates carry wide Wilson CIs; treat as descriptive."
+}

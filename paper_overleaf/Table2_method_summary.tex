@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Evidence summary for the main workflow components.}
+\label{tab:method_summary}
+\small
+\begin{tabular}{lll}
+\toprule
+Component & Evidence basis & Key outcome \\
+\midrule
+Delta transfer & 33-molecule post-round LOO-CV & MAE = 52.1 meV \\
+Feature ablation & 10-seed deterministic LOO-CV replay & Full - RDKit-only = -2.8 meV \\
+Deployment UQ & 19 calibration / 14 OOD test molecules & Conformal 95\% coverage = 35.7\%, bootstrap width = 324 meV \\
+Scaffold resolution & Fisher exact tests & Round-1 Hz vs 5AP $p = 0.031$; full cohort Hz vs non-Hz $p = 0.015$ \\
+Validated set & 35 molecules with 4 SCS-CC2 cross-checks & 13 negative/dark candidates + 1 promoted borderline case \\
+\bottomrule
+\end{tabular}
+\end{table}

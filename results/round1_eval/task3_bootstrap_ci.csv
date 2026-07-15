@@ -1,0 +1,6 @@
+comparison,ΔMAE_mean,ΔMAE_ci_lo,ΔMAE_ci_hi,ΔMAE_significant,Δsign_acc_mean,Δsign_ci_lo,Δsign_ci_hi,Δsign_significant
+full vs no_stda,0.0,0.0,0.0,False,0.0,0.0,0.0,False
+full vs no_ksod,0.0,0.0,0.0,False,0.0,0.0,0.0,False
+full vs no_stda_no_ksod,0.0,0.0,0.0,False,0.0,0.0,0.0,False
+full vs no_dft,0.0,0.0,0.0,False,0.0,0.0,0.0,False
+full vs rdkit_only,0.0,0.0,0.0,False,0.0,0.0,0.0,False

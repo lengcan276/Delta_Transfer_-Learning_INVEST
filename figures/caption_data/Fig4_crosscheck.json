@@ -1,0 +1,99 @@
+{
+  "figure_id": "Fig4_crosscheck",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "results/scscc2_batch2_summary.csv",
+    "results/method_consistency_table.csv"
+  ],
+  "sample_size": {
+    "candidate_scscc2_crosschecks_n": 4,
+    "method_consistency_benchmark_n": 9
+  },
+  "key_numbers": {
+    "candidate_scscc2_crosschecks": {
+      "n": 4,
+      "n_all_signs_agree": 4,
+      "n_sign_conflict": 0,
+      "abs_delta_meV_range": [
+        100.0,
+        174.4
+      ],
+      "molecule_names": [
+        "Hz_DMAC1_NPh21_CF31",
+        "Hz_NPh22_SO2Ph1",
+        "Hz_POZ1_NPh21_CF31",
+        "Hz_NH23"
+      ],
+      "molecule_details": [
+        {
+          "molecule": "Hz_DMAC1_NPh21_CF31",
+          "ADC2_SVP_eV": -0.12034,
+          "SCSCC2_eV": -0.22033,
+          "delta_meV": 100.0,
+          "all_signs_agree": true
+        },
+        {
+          "molecule": "Hz_NPh22_SO2Ph1",
+          "ADC2_SVP_eV": -0.09532,
+          "SCSCC2_eV": -0.21444,
+          "delta_meV": 119.1,
+          "all_signs_agree": true
+        },
+        {
+          "molecule": "Hz_POZ1_NPh21_CF31",
+          "ADC2_SVP_eV": -0.00971,
+          "SCSCC2_eV": -0.16557,
+          "delta_meV": 155.9,
+          "all_signs_agree": true
+        },
+        {
+          "molecule": "Hz_NH23",
+          "ADC2_SVP_eV": -0.38346,
+          "SCSCC2_eV": -0.55787,
+          "delta_meV": 174.4,
+          "all_signs_agree": true
+        }
+      ]
+    },
+    "method_consistency_benchmark": {
+      "n_rows": 9,
+      "n_sign_conflict_molecules": 4,
+      "sign_conflict_molecule_list": [
+        "5AP_NEt2_NPh2",
+        "Hz_POZ1_DMAC2",
+        "Hz_POZ2_CN1",
+        "POZ-BN"
+      ],
+      "basis_set_coverage": {
+        "n_with_adc2_tzvp": 1,
+        "n_with_scscc2_svp": 3,
+        "n_with_scscc2_tzvp": 0,
+        "n_methods_distribution": {
+          "2": 6,
+          "3": 2,
+          "4": 1
+        }
+      }
+    },
+    "scope_separation_note": "candidate_scscc2_crosschecks (n=4) is a targeted SCS-CC2 verification on lead INVEST candidates and reports per-molecule sign agreement and ADC(2) vs SCS-CC2 absolute differences. method_consistency_benchmark is a population-scale audit drawn from results/method_consistency_table.csv reporting cross-method sign conflicts and basis-set coverage. The two are NOT interchangeable: do not quote candidate-level sign-agreement rates as evidence for population-scale method consistency, and do not quote benchmark-level conflict counts as a defect of the candidate cross-check set."
+  },
+  "exclusions_or_filters": [
+    "candidate_scscc2_crosschecks contains exactly 4 lead INVEST candidates promoted to SCS-CC2 verification. It is NOT a population-scale benchmark.",
+    "method_consistency_benchmark draws from results/method_consistency_table.csv and reports cross-method sign-conflict statistics for a different set of molecules."
+  ],
+  "visualization_caveats": [
+    "Panels showing the n=13 SCS-CC2 cross-check and panels showing the legacy multi-method consistency benchmark must be visually separated and individually labeled with their respective n.",
+    "Absolute ADC(2)-vs-SCS-CC2 differences in the n=13 ADC(2)-screened cohort span 10.1–193.7 meV (mean 109.8 meV); signs agree in 13/13 molecules (0 within-screen disagreement; rule-of-three upper bound on disagreement rate ≈ 3/13 = 0.23).",
+    "Per M2, do NOT label SCS-CC2 as a 'gold standard' relative to ADC(2). Use phrases like 'higher-level correlated wavefunction reference' or 'independent SCS-CC2 verification'."
+  ],
+  "manuscript_claims_allowed": [
+    "On the n=13 ADC(2)-screened cohort, ADC(2)/def2-SVP and SCS-CC2/def2-SVP agree in sign for 13/13 molecules (0 within-screen disagreement; rule-of-three one-sided 95% upper bound on disagreement rate ≈ 0.23), with absolute cross-method differences spanning 10–194 meV (mean 110 meV).",
+    "The wider method_consistency_benchmark may be cited separately for cross-method sign-conflict statistics, with its own n and basis-set coverage.",
+    "Higher-level SCS-CC2 evidence is described as 'independent verification' rather than 'gold standard'."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not report a single sign-agreement rate that mixes the 4-molecule candidate cross-check with the method_consistency_benchmark.",
+    "Do not use 'gold standard' for ADC(2), SCS-CC2, or any non-CCSD(T) reference (M2).",
+    "Do not extrapolate the candidate cross-check sign agreement to a population-scale claim about method transferability."
+  ]
+}

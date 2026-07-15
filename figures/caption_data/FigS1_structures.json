@@ -1,0 +1,63 @@
+{
+  "figure_id": "FigS1_structures",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "results/validated_candidates_master.csv",
+    "data/processed/master_molecule_table.csv"
+  ],
+  "sample_size": {
+    "n_table1_candidates": 14,
+    "n_negative_gap": 10,
+    "n_dark_negative_gap": 3,
+    "n_borderline_near_zero": 1
+  },
+  "key_numbers": {
+    "table1_molecule_ids": [
+      "Hz_POZ1_NPh21_CF31",
+      "Hz_Cz1_NPh21_CF31",
+      "Hz_DMAC1_NPh21_CF31",
+      "Hz_NPh22_SO2Ph1",
+      "Hz_NEt21_NPh22",
+      "Hz_DMAC1_NPh21_SO2Ph1",
+      "Hz_NH22_SO2Ph1",
+      "Hz_NPh22_CN1",
+      "Hz_NEt22_CF31",
+      "Hz_DMAC2_SO2Ph1",
+      "Hz_NH23",
+      "Hz_NPh23",
+      "Hz_NPh21_Cz2",
+      "Hz_POZ1_DMAC2"
+    ],
+    "dark_negative_gap_molecule_ids": [
+      "Hz_NH23",
+      "Hz_NPh23",
+      "Hz_NPh21_Cz2"
+    ],
+    "scaffold_breakdown_in_table1": {
+      "Hz": 14
+    },
+    "method_breakdown_in_table1": {
+      "RI-ADC(2)/def2-SVP": 7,
+      "ADC(2)/ADC(2)": 6,
+      "ADC(2)/ADC(2) + SCS-CC2/TZVP": 1
+    }
+  },
+  "exclusions_or_filters": [
+    "Figure includes the 14 Table-1 candidates (negative_gap + dark_negative_gap + borderline_near_zero).",
+    "Positive-gap validated molecules (21) are NOT shown; they are documented in the validated master table."
+  ],
+  "visualization_caveats": [
+    "Molecule IDs in the figure must match `mol_id` in results/validated_candidates_master.csv exactly: ['Hz_POZ1_NPh21_CF31', 'Hz_Cz1_NPh21_CF31', 'Hz_DMAC1_NPh21_CF31', 'Hz_NPh22_SO2Ph1', 'Hz_NEt21_NPh22', 'Hz_DMAC1_NPh21_SO2Ph1', 'Hz_NH22_SO2Ph1', 'Hz_NPh22_CN1', 'Hz_NEt22_CF31', 'Hz_DMAC2_SO2Ph1', 'Hz_NH23', 'Hz_NPh23', 'Hz_NPh21_Cz2', 'Hz_POZ1_DMAC2'].",
+    "The 3 dark_negative_gap molecule(s) (['Hz_NH23', 'Hz_NPh23', 'Hz_NPh21_Cz2']) must be visually distinguished from the bright negative-gap molecules (e.g., shaded background or 'dark' badge).",
+    "If a structure is rotated/redrawn, preserve atom indices consistent with the SMILES recorded in the candidates table."
+  ],
+  "manuscript_claims_allowed": [
+    "FigS1 shows all 14 Table-1 candidates with their scaffold family, ADC(2) ΔEST, and classification.",
+    "Dark INVEST molecules (3) are flagged as not viable OLED emitters (M3) but are retained in the figure for chemical-space context."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not present FigS1 as a complete inventory of all 35 validated molecules; it is restricted to the 14 Table-1 candidates.",
+    "Do not call dark_negative_gap molecules 'OLED emitter candidates' (M3 fails: fosc = 0).",
+    "Do not introduce molecule abbreviations in this figure that are not defined in Table 1."
+  ]
+}

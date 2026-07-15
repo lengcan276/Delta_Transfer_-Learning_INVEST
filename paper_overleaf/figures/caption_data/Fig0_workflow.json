@@ -1,0 +1,60 @@
+{
+  "figure_id": "Fig0_workflow",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "data/processed/master_molecule_table.csv",
+    "results/validated_candidates_master.csv",
+    "results/scscc2_batch2_summary.csv"
+  ],
+  "sample_size": {
+    "n_source_dataset": 3444,
+    "n_target_library": 155,
+    "n_invest_labeled_source": 446,
+    "round1_deployment": 15,
+    "post_round1_excl_nh23": 33,
+    "validated_total": 35,
+    "table1_candidates": 14,
+    "scs_cc2_crosschecks": 4
+  },
+  "key_numbers": {
+    "target_scaffold_counts": {
+      "Hz": 90,
+      "5AP": 55,
+      "BN-PAH": 10
+    },
+    "validated_invest_strict": 13,
+    "validated_borderline_near_zero": 1,
+    "n_table1_candidates": 14,
+    "round1_deployment_n": 15,
+    "round2_selected_n": 12,
+    "scscc2_crosscheck_molecule_names": [
+      "Hz_DMAC1_NPh21_CF31",
+      "Hz_NPh22_SO2Ph1",
+      "Hz_POZ1_NPh21_CF31",
+      "Hz_NH23"
+    ],
+    "scscc2_crosscheck_abs_delta_meV_range": [
+      100.0,
+      174.4
+    ]
+  },
+  "exclusions_or_filters": [
+    "Workflow boxes are schematic summaries, not one-to-one molecule inventories.",
+    "Post-round1 LOO-CV uses the 33-molecule set excluding Hz_NH23.",
+    "SCS-CC2 verification is restricted to 4 selected lead candidates (Hz_DMAC1_NPh21_CF31, Hz_NPh22_SO2Ph1, Hz_POZ1_NPh21_CF31, Hz_NH23). It is NOT a population-scale method audit."
+  ],
+  "visualization_caveats": [
+    "SCS-CC2 cross-checks are n = 4 selected molecules, NOT all 14 Table-1 candidates and NOT all 35 validated molecules.",
+    "The validation box aggregates ADC(2)-level validation with a much smaller SCS-CC2 subset; the two should be visually distinguished in the diagram."
+  ],
+  "manuscript_claims_allowed": [
+    "The workflow spans an 3444-row source dataset, a 155-molecule target library, 15 Round-1 queries, and 35 ADC(2)-validated molecules.",
+    "Higher-level SCS-CC2 evidence is available only for the selected 4-molecule subset.",
+    "The workflow describes a closed-loop progression from screening to validation without claiming universal higher-level confirmation."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not state or imply that all 14 Table-1 candidates (or all 13 INVEST-strict candidates) were SCS-CC2 cross-checked. Only 4 were.",
+    "Do not treat the workflow schematic as a quantitative substitute for the underlying tables.",
+    "Do not equate SCS-CC2 cross-check coverage with method consistency across the full library."
+  ]
+}

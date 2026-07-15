@@ -1,0 +1,15 @@
+{
+  "scenario": "C",
+  "reasons": [
+    "sign_acc=60.0% \u2264 60%"
+  ],
+  "deploy_sign_acc": 0.6,
+  "deploy_invest_recall": 0.2857142857142857,
+  "deploy_invest_fraction": 0.4666666666666667,
+  "hz_deploy_invest_rate": 0.7,
+  "hz_prior_invest_rate": 0.6666666666666666,
+  "binom_test_p": 1.0,
+  "sigma_residual_rho": 0.1002673796791444,
+  "picp_95": 0.48484848484848486,
+  "ece": 0.0
+}

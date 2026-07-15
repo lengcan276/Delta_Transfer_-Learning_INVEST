@@ -1,0 +1,86 @@
+{
+  "figure_id": "diag_mondrian_coverage",
+  "source_data_files": [
+    "results/round1_eval/p0b_conformal_calibration.csv",
+    "data/processed/master_molecule_table.csv",
+    "results/diagnostics/mondrian_coverage.csv",
+    "results/diagnostics/mondrian_coverage.json"
+  ],
+  "sample_size": {
+    "n_calibration": 19,
+    "n_test": 14,
+    "buckets": {
+      "Hz": {
+        "n_calib": 16,
+        "n_test": 9
+      },
+      "5AP": {
+        "n_calib": 1,
+        "n_test": 5
+      },
+      "other": {
+        "n_calib": 2,
+        "n_test": 0
+      }
+    }
+  },
+  "key_numbers": {
+    "nominal_coverage": 0.95,
+    "global_q_hat_meV": 26.68,
+    "global_coverage": 0.3571,
+    "global_covered_over_n": "5/14",
+    "mondrian_aggregate_coverage": 0.1429,
+    "mondrian_aggregate_covered_over_n": "2/14",
+    "buckets": {
+      "Hz": {
+        "n_calib": 16,
+        "n_test": 9,
+        "q_hat_meV": 23.853,
+        "coverage": 0.2222,
+        "covered_over_n": "2/9",
+        "wilson_95_ci": [
+          0.0632,
+          0.5474
+        ]
+      },
+      "5AP": {
+        "n_calib": 1,
+        "n_test": 5,
+        "q_hat_meV": 2.885,
+        "coverage": 0.0,
+        "covered_over_n": "0/5",
+        "wilson_95_ci": [
+          0.0,
+          0.4345
+        ]
+      },
+      "other": {
+        "n_calib": 2,
+        "n_test": 0,
+        "q_hat_meV": 26.678,
+        "coverage": null,
+        "covered_over_n": "n/a",
+        "wilson_95_ci": [
+          null,
+          null
+        ]
+      }
+    }
+  },
+  "exclusions_or_filters": [
+    "Scaffold buckets coalesce 'BN-PAH' and any other small family into 'other' so that no bucket has n_calib < 2.",
+    "Wilson 95% CIs are reported on every bucket because all bucket n_test < 30."
+  ],
+  "visualization_caveats": [
+    "Bucket sizes are very small; CIs are wide. The bar chart shows directional contrast rather than calibrated effect sizes.",
+    "Buckets with n_test = 0 are omitted from the comparison."
+  ],
+  "manuscript_claims_allowed": [
+    "Global split-conformal coverage at the 95% nominal level is 5/14 = 35.7% (Wilson 95% CI [16.3%, 61.2%]).",
+    "Mondrian (scaffold-conditional) recalibration with the same calibration set and finite-sample quantile correction yields the bucket coverages reported in `key_numbers.buckets`."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not claim a Mondrian bucket coverage is significantly different from the global without citing the bucket-level n and Wilson CI.",
+    "Do not extrapolate bucket Mondrian quantiles outside the scaffold families present here."
+  ]
+}

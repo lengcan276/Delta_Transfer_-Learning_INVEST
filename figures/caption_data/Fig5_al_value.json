@@ -1,0 +1,110 @@
+{
+  "figure_id": "Fig5_al_value",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "results/tables/round1_candidates_frozen.csv",
+    "results/round1_eval/task1_deployment_detail.csv",
+    "results/round1_eval/task1_learning_curve.csv",
+    "results/round1_eval/task2_baseline_significance.csv",
+    "results/round1_eval/stats_validation_results.json",
+    "results/validated_candidates_master.csv",
+    "results/audit/round1_reconciliation.csv",
+    "paper/audit_reports/fig5_reconciliation.md"
+  ],
+  "sample_size": {
+    "full_validated_cohort": 35,
+    "round1_frozen_candidates": 16,
+    "round1_deployment": 15,
+    "fisher_conformal_subset": 14
+  },
+  "key_numbers": {
+    "deployment_total_queries": 15,
+    "deployment_negative_hits": 7,
+    "fisher_subset_total": 14,
+    "fisher_subset_negative_hits": 6,
+    "deployment_yield_string": "7/15",
+    "fisher_subset_string": "6/14",
+    "full_cohort_Hz_vs_nonHz": {
+      "table": [
+        [
+          13,
+          14
+        ],
+        [
+          0,
+          8
+        ]
+      ],
+      "hz_invest": 13,
+      "hz_total": 27,
+      "non_hz_invest": 0,
+      "non_hz_total": 8,
+      "fisher_p_two_sided": 0.015245
+    },
+    "round1_subset_Hz_vs_5AP": {
+      "hz_invest": 6,
+      "hz_total": 9,
+      "ap_invest": 0,
+      "ap_total": 5,
+      "fisher_p_two_sided": 0.030969
+    },
+    "baseline_p_values": {
+      "B1_uniform_random": {
+        "expected_invest_mean": 13.1743,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 1.0,
+        "p_value_excl_nh23": 1.0,
+        "significant_005": false
+      },
+      "B2_scaffold_stratified": {
+        "expected_invest_mean": 13.0829,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 1.0,
+        "p_value_excl_nh23": 1.0,
+        "significant_005": false
+      },
+      "B3_hz_greedy_dft": {
+        "expected_invest_mean": 12.1603,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 0.9993,
+        "p_value_excl_nh23": 1.0,
+        "significant_005": false
+      },
+      "B3_hz_greedy_empirical": {
+        "expected_invest_mean": 10.014,
+        "our_invest_incl_nh23": 7,
+        "our_invest_excl_nh23": 6,
+        "p_value_incl_nh23": 0.9708,
+        "p_value_excl_nh23": NaN,
+        "significant_005": false
+      }
+    },
+    "reconciliation_report": "paper/audit_reports/fig5_reconciliation.md"
+  },
+  "exclusions_or_filters": [
+    "Round-1 deployment yield uses n = 15 (includes Hz_NH23). Fisher / split-conformal subset uses n = 14 (excludes Hz_NH23 — dark, fosc = 0, extreme residual that would dominate quantile-based UQ).",
+    "Frozen candidate ranking lists 16 molecules; 1 were not deployed in Round 1 (deferred to a later batch).",
+    "Per the reconciliation report (paper/audit_reports/fig5_reconciliation.md), the 7/15 and 6/14 numbers describe different analysis sets and must each be cited only in their own scope."
+  ],
+  "visualization_caveats": [
+    "Deployment yield = 7/15. Fisher / conformal subset = 6/14. Both must appear in the caption with their distinct n.",
+    "Fisher tests are descriptive: the queried set is policy-selected, not random. p-values describe contrast within the queried set, not unbiased prevalence in the library.",
+    "Active learning vs random / scaffold-stratified / Hz-greedy baselines are not significant (all p ≥ 0.97 in task2_baseline_significance.csv); do not claim AL beat random at p < 0.05."
+  ],
+  "manuscript_claims_allowed": [
+    "Round-1 deployment outcome: 7 INVEST hits among 15 queried molecules.",
+    "Fisher subset (Hz vs 5AP, excluding Hz_NH23): 6 INVEST hits in 14, two-sided Fisher exact p = 0.031 (descriptive).",
+    "Full validated cohort (Hz vs non-Hz): two-sided Fisher exact p = 0.015 (descriptive).",
+    "Cite the reconciliation rule in paper/audit_reports/fig5_reconciliation.md whenever 7/15 or 6/14 appears."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not write \"6/15\" or any 6-from-15 wording for the deployment yield.",
+    "Do not write \"7/14\" or any 7-from-14 wording for the Fisher subset.",
+    "Do not combine the 35-molecule full cohort denominator with the 14-molecule Fisher numerator (or vice versa).",
+    "Do not claim Fisher significance establishes library-wide INVEST prevalence — the queried set is policy-selected.",
+    "Do not claim active learning beat random sampling at p < 0.05 (it does not in any of the four task2 baselines)."
+  ]
+}

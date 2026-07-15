@@ -1,0 +1,24 @@
+{
+  "n_total": 13,
+  "n_sign_retain": 13,
+  "sign_retain_rate": 1.0,
+  "ci_method": "rule of three (one-sided 95% upper bound on within-screen sign-disagreement rate; the 13 molecules are an ADC(2)-pre-screened cohort, not an i.i.d. random sample)",
+  "rule_of_three_upper_bound_disagreement_rate": 0.2308,
+  "clopper_pearson_95_CI": [
+    0.7529,
+    1.0
+  ],
+  "clopper_pearson_90_CI": [
+    0.7942,
+    1.0
+  ],
+  "clopper_pearson_note": "transparency-only; not the paper-facing interpretation for this ADC(2)-pre-screened cohort",
+  "abs_ddEST_meV_summary": {
+    "min": 10.09,
+    "max": 193.74,
+    "mean": 109.84,
+    "median": 101.45
+  },
+  "design_note": "n=13 INVEST cohort: 4 historical SCS-CC2 jobs (Hz_NH23, Hz_DMAC1_NPh21_CF31, Hz_NPh22_SO2Ph1, Hz_POZ1_NPh21_CF31) using adc2_batch2_final / hf_calcs geometries (gnorm 6.6e-5 to 7.6e-4); 9 new Phase 2 SCS-CC2 jobs using delta_dft converged geometries (gnorm 5.6e-5 to 1.5e-4). All geometries within historical convergence baseline.",
+  "repository_canonical": "https://github.com/lengcan276/INVEST-n13"
+}

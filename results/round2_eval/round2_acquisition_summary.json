@@ -1,0 +1,15 @@
+{
+  "n_selected": 12,
+  "max_hz_constraint": 4,
+  "hz_selected": 4,
+  "n_counterfactual": 2,
+  "scaffold_distribution": {
+    "5AP": 5,
+    "Hz": 4,
+    "BN-PAH": 3
+  },
+  "n_scaffolds": 3,
+  "lambda_s": 0.026096033402922755,
+  "lambda_d": 0.5,
+  "cos_threshold": 0.85
+}

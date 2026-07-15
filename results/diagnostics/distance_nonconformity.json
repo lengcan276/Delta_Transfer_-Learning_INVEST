@@ -1,0 +1,44 @@
+{
+  "experiment_id": "diag_A_distance_nonconformity",
+  "hypothesis": "Conformal nonconformity score on the test set is correlated with the molecule's Tanimoto distance to its nearest calibration neighbour.",
+  "fp_settings": {
+    "type": "Morgan",
+    "radius": 2,
+    "nBits": 2048
+  },
+  "n_calibration": 19,
+  "n_test": 14,
+  "test_distance_summary": {
+    "min": 0.20833333333333337,
+    "median": 0.3541666666666667,
+    "mean": 0.36448069522366977,
+    "max": 0.5853658536585367
+  },
+  "calib_loo_distance_summary": {
+    "min": 0.2068965517241379,
+    "median": 0.28125,
+    "mean": 0.3436105571744422,
+    "max": 0.7592592592592593
+  },
+  "spearman_test_distance_vs_nonconf": {
+    "rho": 0.24422457022770952,
+    "p_two_sided": 0.4000901298150556,
+    "n": 14
+  },
+  "spearman_test_distance_vs_abs_residual": {
+    "rho": 0.24422457022770952,
+    "p_two_sided": 0.4000901298150556,
+    "n": 14
+  },
+  "spearman_calib_loo_distance_vs_nonconf": {
+    "rho": 0.28772683736493676,
+    "p_two_sided": 0.23228482082471294,
+    "n": 19
+  },
+  "mannwhitney_test_dist_gt_calib_loo_dist": {
+    "U": 157.0,
+    "p_one_sided_greater": 0.19583809802547258,
+    "interpretation": "Tests whether deployment (test) molecules are systematically further from the calibration set than calibration molecules are from each other (LOO-style)."
+  },
+  "interpretation": "If r_test_distance_vs_nonconf > 0 with p < 0.1, the conformal under-coverage is at least partially driven by chemical-space shift between calibration and deployment subsets \u2014 i.e., the exchangeability assumption is empirically violated, and a distance-aware (Mondrian or locally-weighted) recalibration is warranted."
+}
