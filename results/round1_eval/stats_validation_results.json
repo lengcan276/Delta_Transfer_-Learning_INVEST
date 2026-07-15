@@ -1,0 +1,49 @@
+{
+  "subspace_elimination": {
+    "test": "fisher_exact_5ap_vs_hz",
+    "table": [
+      [
+        6,
+        3
+      ],
+      [
+        0,
+        5
+      ]
+    ],
+    "hz_invest": 6,
+    "hz_total": 9,
+    "ap_invest": 0,
+    "ap_total": 5,
+    "odds_ratio": Infinity,
+    "p_value": 0.030969030969030965,
+    "ap_ci_upper_95": 0.450719728346941,
+    "ap_min_dest_ev": 0.17137,
+    "significant_005": "True"
+  },
+  "domain_adaptation": {
+    "test": "wilcoxon_signed_rank_domain_adaptation",
+    "n_paired": 19,
+    "n_improved": 10,
+    "n_worsened": 9,
+    "pre_mean_abs_res": 0.07754681188545728,
+    "post_mean_abs_res": 0.058720944103110344,
+    "mean_reduction": 0.018825867782346926,
+    "wilcoxon_stat": 70.0,
+    "p_two_sided": 0.3320655822753906,
+    "p_one_sided_greater": 0.1660327911376953,
+    "significant_005": "False",
+    "sample_efficiency_ratio": 2.6877861949409203
+  },
+  "entropy_reduction": {
+    "test": "shannon_entropy_reduction",
+    "n_unlabeled": 122,
+    "total_H_pre": 50.33773407076624,
+    "total_H_post": 43.54761439182412,
+    "delta_H": 6.790119678942119,
+    "relative_reduction": 0.13489124618514559,
+    "sce_al": 0.9182958340544896,
+    "sce_hz_greedy": 0.0,
+    "csrf": 3.2666666666666666
+  }
+}

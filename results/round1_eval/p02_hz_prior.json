@@ -1,0 +1,10 @@
+{
+  "n_hz_round1_excl_nh23": 9,
+  "n_hz_invest": 6,
+  "hz_invest_rate": 0.6666666666666666,
+  "clopper_pearson_95ci": [
+    0.29929505620854036,
+    0.9251453685803082
+  ],
+  "conservative_lower_bound": 0.29929505620854036
+}

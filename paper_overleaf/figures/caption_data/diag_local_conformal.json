@@ -1,0 +1,166 @@
+{
+  "figure_id": "diag_local_conformal",
+  "source_data_files": [
+    "results/round1_eval/p0b_conformal_calibration.csv",
+    "data/processed/master_molecule_table.csv",
+    "results/diagnostics/local_conformal.csv",
+    "results/diagnostics/local_conformal.json"
+  ],
+  "sample_size": {
+    "n_calibration": 19,
+    "n_test": 14,
+    "betas_tested": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "key_numbers": {
+    "nominal_levels_tested": [
+      0.8,
+      0.9,
+      0.95
+    ],
+    "betas_tested": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "coverage_grid": {
+      "alpha_0.8": {
+        "beta_0": {
+          "coverage": 0.2143,
+          "covered_over_n": "3/14",
+          "wilson_95_ci": [
+            0.0757,
+            0.4759
+          ],
+          "q_hat_local_meV_median": 11.22
+        },
+        "beta_1": {
+          "coverage": 0.2857,
+          "covered_over_n": "4/14",
+          "wilson_95_ci": [
+            0.1172,
+            0.5465
+          ],
+          "q_hat_local_meV_median": 18.9
+        },
+        "beta_2": {
+          "coverage": 0.2857,
+          "covered_over_n": "4/14",
+          "wilson_95_ci": [
+            0.1172,
+            0.5465
+          ],
+          "q_hat_local_meV_median": 23.85
+        },
+        "beta_4": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        }
+      },
+      "alpha_0.9": {
+        "beta_0": {
+          "coverage": 0.2857,
+          "covered_over_n": "4/14",
+          "wilson_95_ci": [
+            0.1172,
+            0.5465
+          ],
+          "q_hat_local_meV_median": 23.85
+        },
+        "beta_1": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        },
+        "beta_2": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        },
+        "beta_4": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        }
+      },
+      "alpha_0.95": {
+        "beta_0": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        },
+        "beta_1": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        },
+        "beta_2": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        },
+        "beta_4": {
+          "coverage": 0.3571,
+          "covered_over_n": "5/14",
+          "wilson_95_ci": [
+            0.1634,
+            0.6124
+          ],
+          "q_hat_local_meV_median": 26.68
+        }
+      }
+    },
+    "structural_pinning_at_alpha_0_95": "At alpha = 0.95 with n_calib = 19, the finite-sample rank ceil((n+1)*alpha) = 19 = n, so q_hat is the max calibration nonconformity score for any \u03b2. Local weighting can act only at lower \u03b1."
+  },
+  "exclusions_or_filters": [
+    "Hz_NH23 is excluded by design from the conformal test set (n_test = 14, not 15).",
+    "Locally-weighted quantile uses Tanimoto similarity on Morgan FP (radius=2, 2048 bits) with epsilon=0.001 to avoid zero weights.",
+    "\u03b2 was not tuned on the test set; all four values are reported for transparency."
+  ],
+  "visualization_caveats": [
+    "All coverages are computed on n_test = 14 < 30; Wilson 95% CIs span > 30 percentage points and overlap.",
+    "The \u03b2 = 0 column reproduces the global split-conformal result (5/14 = 35.7%); higher \u03b2 localises calibration around each test molecule."
+  ],
+  "manuscript_claims_allowed": [
+    "Tanimoto-weighted locally-adaptive split conformal yields the coverages reported in `key_numbers.coverage_by_beta`; intervals become per-test-molecule rather than constant.",
+    "On this n_calib = 19 / n_test = 14 setting, the change in empirical coverage with \u03b2 must be reported with its Wilson 95% CI rather than as a point claim."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not claim locally-weighted CP 'recovers' nominal coverage if the post-recalibration Wilson CI does not include the nominal level.",
+    "Do not select \u03b2 post-hoc on the test set \u2014 report all four."
+  ]
+}

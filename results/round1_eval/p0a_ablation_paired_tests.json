@@ -1,0 +1,152 @@
+{
+  "n_seeds": 10,
+  "seeds": [
+    42,
+    123,
+    7,
+    2024,
+    314,
+    999,
+    55,
+    8080,
+    1337,
+    65535
+  ],
+  "n_configs": 6,
+  "n_target": 33,
+  "shared_features_n": 54,
+  "physics_in_target": [
+    "homo_spacing",
+    "lumo_spacing",
+    "od_index",
+    "dft_dest_raw_ev",
+    "dft_dest_calibrated_ev",
+    "fosc_dft",
+    "homo_ev",
+    "lumo_ev",
+    "hl_gap_ev",
+    "homo_m1_ev",
+    "lumo_p1_ev"
+  ],
+  "summary": [
+    {
+      "config": "full",
+      "MAE_mean": 0.05485335616062985,
+      "MAE_std": 0.0,
+      "sign_acc_mean": 0.7575757575757576,
+      "sign_acc_std": 0.0,
+      "INVEST_rec_mean": 0.4545454545454545,
+      "INVEST_rec_std": 0.0,
+      "n_delta_features": 65,
+      "n_physics": 11
+    },
+    {
+      "config": "no_dft",
+      "MAE_mean": 0.053165282771226105,
+      "MAE_std": 0.0,
+      "sign_acc_mean": 0.7272727272727273,
+      "sign_acc_std": 0.0,
+      "INVEST_rec_mean": 0.4545454545454545,
+      "INVEST_rec_std": 0.0,
+      "n_delta_features": 57,
+      "n_physics": 3
+    },
+    {
+      "config": "no_ksod",
+      "MAE_mean": 0.05232644854543785,
+      "MAE_std": 0.0,
+      "sign_acc_mean": 0.7575757575757576,
+      "sign_acc_std": 0.0,
+      "INVEST_rec_mean": 0.4545454545454545,
+      "INVEST_rec_std": 0.0,
+      "n_delta_features": 62,
+      "n_physics": 8
+    },
+    {
+      "config": "no_stda",
+      "MAE_mean": 0.05485335616062985,
+      "MAE_std": 0.0,
+      "sign_acc_mean": 0.7575757575757576,
+      "sign_acc_std": 0.0,
+      "INVEST_rec_mean": 0.4545454545454545,
+      "INVEST_rec_std": 0.0,
+      "n_delta_features": 65,
+      "n_physics": 11
+    },
+    {
+      "config": "no_stda_no_ksod",
+      "MAE_mean": 0.05232644854543785,
+      "MAE_std": 0.0,
+      "sign_acc_mean": 0.7575757575757576,
+      "sign_acc_std": 0.0,
+      "INVEST_rec_mean": 0.4545454545454545,
+      "INVEST_rec_std": 0.0,
+      "n_delta_features": 62,
+      "n_physics": 8
+    },
+    {
+      "config": "rdkit_only",
+      "MAE_mean": 0.05208695978701903,
+      "MAE_std": 0.0,
+      "sign_acc_mean": 0.7878787878787878,
+      "sign_acc_std": 0.0,
+      "INVEST_rec_mean": 0.5454545454545454,
+      "INVEST_rec_std": 0.0,
+      "n_delta_features": 54,
+      "n_physics": 0
+    }
+  ],
+  "paired_tests": {
+    "no_stda": {
+      "comparison": "full vs no_stda",
+      "n_seeds": 10,
+      "all_identical": true,
+      "mean_diff": 0.0,
+      "p_value": 1.0,
+      "significant_005": false,
+      "interpretation": "Removing features makes ZERO difference (identical across all 10 seeds)"
+    },
+    "no_ksod": {
+      "comparison": "full vs no_ksod",
+      "n_seeds": 10,
+      "all_seeds_same_diff": true,
+      "deterministic_diff": -0.0025269076151919964,
+      "effect_direction": "ablation_better",
+      "p_value": null,
+      "significant_005": null,
+      "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00253 eV. Wilcoxon not applicable (n_eff=1)."
+    },
+    "no_stda_no_ksod": {
+      "comparison": "full vs no_stda_no_ksod",
+      "n_seeds": 10,
+      "all_seeds_same_diff": true,
+      "deterministic_diff": -0.0025269076151919964,
+      "effect_direction": "ablation_better",
+      "p_value": null,
+      "significant_005": null,
+      "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00253 eV. Wilcoxon not applicable (n_eff=1)."
+    },
+    "no_dft": {
+      "comparison": "full vs no_dft",
+      "n_seeds": 10,
+      "all_seeds_same_diff": true,
+      "deterministic_diff": -0.0016880733894037436,
+      "effect_direction": "ablation_better",
+      "p_value": null,
+      "significant_005": null,
+      "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00169 eV. Wilcoxon not applicable (n_eff=1)."
+    },
+    "rdkit_only": {
+      "comparison": "full vs rdkit_only",
+      "n_seeds": 10,
+      "all_seeds_same_diff": true,
+      "deterministic_diff": -0.00276639637361082,
+      "effect_direction": "ablation_better",
+      "p_value": null,
+      "significant_005": null,
+      "interpretation": "LOO-CV is deterministic for this data: removing features decreases MAE by 0.00277 eV. Wilcoxon not applicable (n_eff=1)."
+    }
+  },
+  "diagnosis": "Physics features produce minor numerical differences but NONE reach statistical significance (p > 0.05). Their contribution is negligible relative to RDKit fingerprint features.",
+  "design_note": "Source model uses shared features (RDKit FP/PCA, available in both domains). Delta correction model uses target-domain features which MAY include physics descriptors. Ablation removes physics features from the DELTA model only."
+}

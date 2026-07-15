@@ -1,0 +1,57 @@
+{
+  "figure_id": "Fig3_classification",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "results/validated_candidates_master.csv"
+  ],
+  "sample_size": {
+    "n_total_validated": 35,
+    "n_invest_strict_negative_gap": 10,
+    "n_dark_negative_gap": 3,
+    "n_invest_strict": 13,
+    "n_borderline_near_zero": 1,
+    "n_positive_gap": 21
+  },
+  "key_numbers": {
+    "classification_counts": {
+      "positive_gap": 21,
+      "negative_gap": 10,
+      "dark_negative_gap": 3,
+      "borderline_near_zero": 1
+    },
+    "scaffold_counts": {
+      "Hz": 27,
+      "5AP": 6,
+      "BN-PAH": 1,
+      "BN": 1
+    },
+    "min_DEST_eV": -0.38346,
+    "max_DEST_eV": 0.22997,
+    "median_DEST_eV": 0.05854,
+    "fosc_zero_molecule_ids": [
+      "Hz_NH23"
+    ],
+    "fosc_min_positive": 3e-06,
+    "fosc_max": 0.453,
+    "log_floor_for_zero_fosc": 0.0001
+  },
+  "exclusions_or_filters": [
+    "Panel uses the full 35-molecule validated cohort. No molecules are filtered out.",
+    "`dark_negative_gap` molecules (3) have ADC(2) ΔEST < 0 but fosc(S1) ≤ 1e-3 and are NOT OLED-emitter candidates by the M3 rule."
+  ],
+  "visualization_caveats": [
+    "fosc = 0 molecules (1: Hz_NH23) are plotted at the explicit log-scale floor fosc = 0.0001; the floor value MUST be stated in the figure caption.",
+    "Zero-fosc points must be visually distinguished (e.g., open marker or '×' glyph) to avoid implying a measured non-zero fosc on log axes.",
+    "Color alone (red/green) must not encode INVEST vs non-INVEST; pair with shape encoding for colorblind readers."
+  ],
+  "manuscript_claims_allowed": [
+    "13 of 35 validated molecules satisfy ΔEST < 0 (negative-gap or dark-negative-gap), and 1 additional molecule(s) fall in the borderline near-zero region.",
+    "Dark INVEST molecules (fosc = 0) are plotted at the log-scale floor fosc = 0.0001 for visibility.",
+    "Cite per-class counts directly from canonical_metrics.validation.classification_counts."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not silently drop fosc = 0 points from a log-scale scatter; either show them at the stated floor or move to a separate panel.",
+    "Do not call dark_negative_gap molecules \"OLED emitter candidates\" — they fail the fosc > 1e-3 requirement (M3).",
+    "Do not aggregate negative_gap and dark_negative_gap counts without naming them separately in the caption."
+  ]
+}

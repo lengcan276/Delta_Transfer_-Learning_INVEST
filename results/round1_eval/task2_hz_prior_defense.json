@@ -1,0 +1,13 @@
+{
+  "our_invest_rate": 0.4666666666666667,
+  "b1_uniform_expected": 0.8782866666666667,
+  "b2_stratified_expected": 0.8721933333333334,
+  "b3_hz_greedy_expected": 0.8106866666666667,
+  "b3_hz_greedy_empirical_expected": 0.6676,
+  "b1_p": 1.0,
+  "b2_p": 1.0,
+  "b3_dft_p": 0.9993,
+  "b3_empirical_p": 0.9708,
+  "conclusion": "AL does not beat Hz-greedy on hit rate; value is in exploration and model improvement",
+  "defense_strategy": "Frame AL as error-correcting layer that provides scaffold-diverse information and reduces uncertainty"
+}

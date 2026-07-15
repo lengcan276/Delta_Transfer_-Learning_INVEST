@@ -1,0 +1,44 @@
+# Phase 2.2 mini-batch (2 of 9) — submission record
+
+Date submitted: 2026-05-05 14:33 CST
+Operator: Claude Code (qfh-u24 → ssh ybsi)
+
+## Jobs
+
+| JobID | Molecule | Atoms | Geometry source | ADC(2) ΔE_ST ref | Node | Status |
+|---|---|---|---|---|---|---|
+| **4982** | Hz_DMAC2_SO2Ph1 | 87 | adc2_batch2_final/ (gnorm=9.7e-3, canonical L2 source) | -0.03205 eV | node5 | RUNNING |
+| **4983** | Hz_NEt22_CF31 | 47 | round1_adc2/jobs/ via t2x coord (R1 deploy source) | -0.03593 eV | node6 | RUNNING |
+
+Both dispatched within 17 s of sbatch. RL-1 prospectively satisfied (both on
+intel partition compute nodes, not master).
+
+## Geometry source decision
+
+Per RL-2 ("REUSE the xtb-optimized geometry used for the ADC(2) validation"),
+both molecules use the geometry that produced the cited L2/R1 ADC(2) ΔE_ST
+value, NOT a re-optimized variant.
+
+- Hz_DMAC2_SO2Ph1: adc2_batch2_final/ (gnorm=9.7e-3 — looser than typical
+  xtb default; flagged for transparency in n=13 cohort write-up)
+- Hz_NEt22_CF31: from R1 ADC(2) job's coord file via Turbomole `t2x` round
+  trip on ybsi master (R1 batch only saved coord, not xtbopt.xyz)
+
+## Wallclock estimate (per Phase 1 sanity recalibration)
+
+Sanity (Hz_DMAC1_NPh21_CF31, 70 atoms): 2d 0h 6m on node12 (intel).
+- Hz_DMAC2_SO2Ph1 (87 atoms): expected ~2.5-3 days
+- Hz_NEt22_CF31 (47 atoms): expected ~1-1.5 days
+
+Mini-batch checkpoint expected: 2026-05-08 (3 days from now).
+
+## Status check command
+
+ssh -p 22116 ybsi@10.67.4.7 \
+  'squeue -j 4982,4983 -o "%i %j %T %R %M"; \
+   for j in 4982 4983; do \
+     echo "=== job $j tail ==="; \
+     tail -10 /public/home/ybsi/nudt_cleng/2026/orca_jobs/scscc2_extension_n13/Hz_*/slurm-${j}.out 2>/dev/null; \
+   done'
+
+Not polling. Awaiting user query for status / Phase 2.3 checkpoint go.

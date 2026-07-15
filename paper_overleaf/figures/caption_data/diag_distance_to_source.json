@@ -1,0 +1,47 @@
+{
+  "figure_id": "diag_distance_to_source",
+  "source_data_files": [
+    "results/round1_eval/p0b_conformal_calibration.csv",
+    "data/processed/master_molecule_table.csv",
+    "results/diagnostics/distance_to_source.csv",
+    "results/diagnostics/distance_to_source.json"
+  ],
+  "sample_size": {
+    "n_pollice_source": 446,
+    "n_calibration": 19,
+    "n_test": 14,
+    "k_for_knn_distance": 5
+  },
+  "key_numbers": {
+    "calib_d_knn5_median": 0.8031,
+    "test_d_knn5_median": 0.7988,
+    "mannwhitney_test_gt_calib_d_knn5": {
+      "U": 135.5,
+      "p_one_sided": 0.471
+    },
+    "spearman_d_knn5_vs_abs_residual_all_33": {
+      "rho": 0.1581,
+      "p_two_sided": 0.3795
+    },
+    "spearman_d_knn5_vs_abs_residual_test_14": {
+      "rho": -0.1341,
+      "p_two_sided": 0.6477
+    }
+  },
+  "exclusions_or_filters": [
+    "Pollice source = 446 molecules (source_domain == 'pollice' AND adc2_dest_ev.notna() in master_molecule_table.csv).",
+    "Distance metric: 1 \u2212 Tanimoto on Morgan FP (radius=2, 2048 bits); k = 5 for the nUNC-style applicability metric (Whitehead et al., ACS Omega 2026)."
+  ],
+  "visualization_caveats": [
+    "Both calib (n=19) and test (n=14) have small samples; statistical tests are reported with their actual n.",
+    "The k-NN distance metric is sensitive to the choice of k; we report k = 5 following Whitehead et al. (2026)."
+  ],
+  "manuscript_claims_allowed": [
+    "Round-1 deployment molecules are at median k-NN=5 distance 0.799 from the Pollice source set, vs 0.803 for the calibration set; Mann-Whitney one-sided p = 0.471.",
+    "Across all 33 target molecules, |residual| correlates with k-NN=5 distance to the source set (Spearman \u03c1 = +0.16, p = 0.379)."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not state the test molecules are 'far OOD' without citing the actual median distance and the calib comparator.",
+    "Do not cite Spearman significance from n = 14 alone; cite n = 33 (calib + test combined) when supportive."
+  ]
+}

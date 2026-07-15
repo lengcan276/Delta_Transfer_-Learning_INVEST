@@ -1,0 +1,95 @@
+{
+  "n_total": 13,
+  "n_sign_retain": 13,
+  "sign_retain_rate_pct": 100.0,
+  "clopper_pearson_95_CI": [
+    0.7529,
+    1.0
+  ],
+  "abs_ddEST_meV_min": 10.09,
+  "abs_ddEST_meV_max": 193.74,
+  "abs_ddEST_meV_mean": 109.84,
+  "abs_ddEST_meV_median": 101.45,
+  "molecules": [
+    {
+      "mol_id": "Hz_NH23",
+      "adc2_meV": -383.46,
+      "scscc2_meV": -557.87,
+      "batch": "historical"
+    },
+    {
+      "mol_id": "Hz_DMAC1_NPh21_CF31",
+      "adc2_meV": -120.34,
+      "scscc2_meV": -220.33,
+      "batch": "historical"
+    },
+    {
+      "mol_id": "Hz_NPh22_SO2Ph1",
+      "adc2_meV": -95.32,
+      "scscc2_meV": -214.44,
+      "batch": "historical"
+    },
+    {
+      "mol_id": "Hz_POZ1_NPh21_CF31",
+      "adc2_meV": -9.71,
+      "scscc2_meV": -165.57,
+      "batch": "historical"
+    },
+    {
+      "mol_id": "Hz_NEt22_CF31",
+      "adc2_meV": -35.93,
+      "scscc2_meV": -111.13,
+      "batch": "phase2.2"
+    },
+    {
+      "mol_id": "Hz_DMAC2_SO2Ph1",
+      "adc2_meV": -32.05,
+      "scscc2_meV": -225.79,
+      "batch": "phase2.2"
+    },
+    {
+      "mol_id": "Hz_NH22_SO2Ph1",
+      "adc2_meV": -64.0,
+      "scscc2_meV": -163.44,
+      "batch": "phase2.4"
+    },
+    {
+      "mol_id": "Hz_DMAC1_NPh21_SO2Ph1",
+      "adc2_meV": -66.0,
+      "scscc2_meV": -208.58,
+      "batch": "phase2.4"
+    },
+    {
+      "mol_id": "Hz_Cz1_NPh21_CF31",
+      "adc2_meV": -136.0,
+      "scscc2_meV": -237.45,
+      "batch": "phase2.4"
+    },
+    {
+      "mol_id": "Hz_NPh23",
+      "adc2_meV": -123.0,
+      "scscc2_meV": -231.3,
+      "batch": "phase2.4"
+    },
+    {
+      "mol_id": "Hz_NPh21_Cz2",
+      "adc2_meV": -119.0,
+      "scscc2_meV": -129.09,
+      "batch": "phase2.4"
+    },
+    {
+      "mol_id": "Hz_NEt21_NPh22",
+      "adc2_meV": -89.0,
+      "scscc2_meV": -154.62,
+      "batch": "phase2.4"
+    },
+    {
+      "mol_id": "Hz_NPh22_CN1",
+      "adc2_meV": -54.0,
+      "scscc2_meV": -136.14,
+      "batch": "phase2.4"
+    }
+  ],
+  "data_source": "results/scscc2_extension_n13/cross_check_n13.csv",
+  "stats_source": "results/scscc2_extension_n13/stats_n13.json"
+}

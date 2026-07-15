@@ -1,0 +1,10 @@
+molecule,DDFT_corr_eV,ADC2_SVP_eV,SCSCC2_SVP_eV,ADC2_TZVP_eV,SCSCC2_TZVP_eV,n_methods_available,all_signs_agree,sign_majority
+5AP_NEt2_NPh2,-0.08788,0.21509,,,,2,False,neg
+Hz_DMAC1_NPh21_CF31,-0.0497,-0.12034,-0.22033,-0.08088,,4,True,neg
+Hz_DMAC2_SO2Ph1,-0.03975,-0.03205,,,,2,True,neg
+Hz_NPh21_Cz2,-0.098,-0.11945,,,,2,True,neg
+Hz_NPh22_SO2Ph1,-0.08903,-0.09532,-0.21444,,,3,True,neg
+Hz_POZ1_DMAC2,-0.09063,0.02669,,,,2,False,neg
+Hz_POZ1_NPh21_CF31,-0.12061,-0.00971,-0.16557,,,3,True,neg
+Hz_POZ2_CN1,-0.18205,0.05854,,,,2,False,neg
+POZ-BN,-0.31979,0.03856,,,,2,False,neg

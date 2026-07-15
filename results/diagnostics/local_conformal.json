@@ -1,0 +1,195 @@
+{
+  "experiment_id": "diag_D_local_conformal",
+  "method": "Tanimoto-weighted locally-adaptive split-conformal: per-test-molecule weighted upper-tail quantile of the calibration nonconformity scores, with weights w_i \u221d (T(f_t, f_calib[i]) + \u03b5)^\u03b2. \u03b2 = 0 recovers the global split-conformal quantile.",
+  "fp_settings": {
+    "type": "Morgan",
+    "radius": 2,
+    "nBits": 2048,
+    "epsilon": 0.001
+  },
+  "nominal_levels_tested": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "n_calibration": 19,
+  "n_test": 14,
+  "betas_tested": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "results_by_alpha_beta": {
+    "alpha_0.8_beta_0": {
+      "alpha": 0.8,
+      "beta": 0,
+      "covered_over_n": "3/14",
+      "coverage": 0.21428571428571427,
+      "wilson_95_ci": [
+        0.07571386712693184,
+        0.47589230586600295
+      ],
+      "q_hat_local_meV_min": 11.2223240709304,
+      "q_hat_local_meV_median": 11.2223240709304,
+      "q_hat_local_meV_max": 11.2223240709304,
+      "q_hat_local_meV_mean": 11.222324070930403
+    },
+    "alpha_0.8_beta_1": {
+      "alpha": 0.8,
+      "beta": 1,
+      "covered_over_n": "4/14",
+      "coverage": 0.2857142857142857,
+      "wilson_95_ci": [
+        0.11721378644576919,
+        0.5464908432989318
+      ],
+      "q_hat_local_meV_min": 11.2223240709304,
+      "q_hat_local_meV_median": 18.899420496225247,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 18.913846800156893
+    },
+    "alpha_0.8_beta_2": {
+      "alpha": 0.8,
+      "beta": 2,
+      "covered_over_n": "4/14",
+      "coverage": 0.2857142857142857,
+      "wilson_95_ci": [
+        0.11721378644576919,
+        0.5464908432989318
+      ],
+      "q_hat_local_meV_min": 13.945543553829,
+      "q_hat_local_meV_median": 23.8532974386215,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 22.232883590289404
+    },
+    "alpha_0.8_beta_4": {
+      "alpha": 0.8,
+      "beta": 4,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 13.945543553829,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 25.364617855037828
+    },
+    "alpha_0.9_beta_0": {
+      "alpha": 0.9,
+      "beta": 0,
+      "covered_over_n": "4/14",
+      "coverage": 0.2857142857142857,
+      "wilson_95_ci": [
+        0.11721378644576919,
+        0.5464908432989318
+      ],
+      "q_hat_local_meV_min": 23.8532974386215,
+      "q_hat_local_meV_median": 23.8532974386215,
+      "q_hat_local_meV_max": 23.8532974386215,
+      "q_hat_local_meV_mean": 23.853297438621503
+    },
+    "alpha_0.9_beta_1": {
+      "alpha": 0.9,
+      "beta": 1,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 23.8532974386215,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.47577221972588
+    },
+    "alpha_0.9_beta_2": {
+      "alpha": 0.9,
+      "beta": 2,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 26.6775010490416,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.6775010490416
+    },
+    "alpha_0.9_beta_4": {
+      "alpha": 0.9,
+      "beta": 4,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 26.6775010490416,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.6775010490416
+    },
+    "alpha_0.95_beta_0": {
+      "alpha": 0.95,
+      "beta": 0,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 26.6775010490416,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.6775010490416
+    },
+    "alpha_0.95_beta_1": {
+      "alpha": 0.95,
+      "beta": 1,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 26.6775010490416,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.6775010490416
+    },
+    "alpha_0.95_beta_2": {
+      "alpha": 0.95,
+      "beta": 2,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 26.6775010490416,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.6775010490416
+    },
+    "alpha_0.95_beta_4": {
+      "alpha": 0.95,
+      "beta": 4,
+      "covered_over_n": "5/14",
+      "coverage": 0.35714285714285715,
+      "wilson_95_ci": [
+        0.1634473175355414,
+        0.612355768960926
+      ],
+      "q_hat_local_meV_min": 26.6775010490416,
+      "q_hat_local_meV_median": 26.6775010490416,
+      "q_hat_local_meV_max": 26.6775010490416,
+      "q_hat_local_meV_mean": 26.6775010490416
+    }
+  },
+  "structural_observation": "At alpha = 0.95 with n_calib = 19, the finite-sample ceil((n+1)*alpha) = 19 = n rank pins q_hat to the maximum calibration nonconformity score regardless of weighting; locally-weighted CP cannot differ from global CP at this level. At alpha = 0.90 and 0.80 the rank is < n and local weighting can act.",
+  "interpretation": "Sweeping \u03b2 from 0 (global quantile) upward localises the calibration weighting around each test molecule. Compare coverage at \u03b1 = 0.80, 0.90, 0.95 to disentangle the structural pinning at \u03b1 = 0.95 from a real local-weighting effect at lower \u03b1."
+}

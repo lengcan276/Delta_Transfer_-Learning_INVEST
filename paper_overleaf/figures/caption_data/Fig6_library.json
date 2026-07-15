@@ -1,0 +1,55 @@
+{
+  "figure_id": "Fig6_library",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "data/processed/master_molecule_table.csv",
+    "results/validated_candidates_master.csv"
+  ],
+  "sample_size": {
+    "n_source_dataset": 3444,
+    "n_master_library": 2026,
+    "n_target_domain": 155,
+    "n_invest_labeled_source": 446,
+    "n_validated": 35,
+    "n_table1_candidates": 14
+  },
+  "key_numbers": {
+    "scaffold_family_counts": {
+      "pollice_heptazine_deriv": 1719,
+      "literature": 150,
+      "Hz": 90,
+      "5AP": 55,
+      "BN-PAH": 10,
+      "reference": 2
+    },
+    "target_scaffold_counts": {
+      "Hz": 90,
+      "5AP": 55,
+      "BN-PAH": 10
+    },
+    "n_scaffold_families": 6,
+    "n_model_input_rows": 2026,
+    "n_model_features_total": 84,
+    "target_inclusion_rule": "All rows with source_domain == 'this_work' in master_molecule_table.csv are included."
+  },
+  "exclusions_or_filters": [
+    "The figure shows ALL 155 target-domain molecules (Hz, 5AP, BN-PAH); no fosc / energy / scaffold filter is applied at the target-library level.",
+    "Background scaffold families (pollice_heptazine_deriv: 1719, literature: 150, reference: 2) are shown for context but are NOT part of the target-domain screening pool.",
+    "Validated subset (n = 35) is a strict subset of the target library; molecules without ADC(2) validation are not annotated as validated."
+  ],
+  "visualization_caveats": [
+    "State explicitly in the caption: \"All 155 target-domain molecules are included; no fosc / energy / scaffold filter is applied to this panel.\"",
+    "Counts per scaffold family must match canonical_metrics.library.target_scaffold_counts: {'Hz': 90, '5AP': 55, 'BN-PAH': 10}.",
+    "The 2026-molecule master library is larger than the 155-molecule target library; do not conflate the two denominators."
+  ],
+  "manuscript_claims_allowed": [
+    "The target screening library comprises 155 molecules across 3 scaffold families ({'Hz': 90, '5AP': 55, 'BN-PAH': 10}).",
+    "The full master library has 2026 rows; the source dataset has 3444 rows with 446 Pollice ADC(2)-labeled source-domain molecules (plus 19 pre-Round-1 labelled target molecules).",
+    "All 155 target molecules are visualised in this figure without additional filtering."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not state \"155 target molecules were filtered/screened\" — Fig 6 shows the full target library.",
+    "Do not use the 2026-row master library or 3444-row source dataset as the denominator for target-library percentages.",
+    "Do not equate \"validated\" (n = 35) with \"target-domain\" (n = 155); the former is a sub-selection of the latter."
+  ]
+}

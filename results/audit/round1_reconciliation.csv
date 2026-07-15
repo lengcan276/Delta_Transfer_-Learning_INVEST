@@ -1,0 +1,17 @@
+molecule_id,molecule_name,scaffold,selected_in_round1,included_in_deployment_yield,included_in_fisher_subset,included_in_conformal_test,adc2_gap_eV,classification,is_negative_gap,exclusion_reason_if_any
+5AP_NPh2_Me,5AP_NPh2_Me,5AP,True,True,True,True,0.17137,positive_gap,False,
+5AP_NEt2_Ph,5AP_NEt2_Ph,5AP,True,True,True,True,0.1727,positive_gap,False,
+5AP_NPh22,5AP_NPh22,5AP,True,True,True,True,0.1954,positive_gap,False,
+5AP_NPh2_OMe,5AP_NPh2_OMe,5AP,True,True,True,True,0.22031,positive_gap,False,
+5AP_NMe2_NPh2,5AP_NMe2_NPh2,5AP,True,True,True,True,0.22997,positive_gap,False,
+Hz_NH23,Hz_NH23,Hz,True,True,False,False,-0.38346,dark_negative_gap,True,Hz_NH23 is the dark / fosc=0 outlier; it is in the 15-molecule deployment but excluded from the 14-molecule Fisher and conformal subsets by design (extreme residual would dominate quantile-based UQ)
+Hz_Cz1_NPh21_CF31,Hz_Cz1_NPh21_CF31,Hz,True,True,True,True,-0.13573,negative_gap,True,
+Hz_NEt21_NPh22,Hz_NEt21_NPh22,Hz,True,True,True,True,-0.08858,negative_gap,True,
+Hz_DMAC1_NPh21_SO2Ph1,Hz_DMAC1_NPh21_SO2Ph1,Hz,True,True,True,True,-0.06566,negative_gap,True,
+Hz_NH22_SO2Ph1,Hz_NH22_SO2Ph1,Hz,True,True,True,True,-0.06416,negative_gap,True,
+Hz_NPh22_CN1,Hz_NPh22_CN1,Hz,True,True,True,True,-0.05384,negative_gap,True,
+Hz_NEt22_CF31,Hz_NEt22_CF31,Hz,True,True,True,True,-0.03593,negative_gap,True,
+Hz_NEt22_CN1,Hz_NEt22_CN1,Hz,True,True,True,True,0.04848,positive_gap,False,
+Hz_NMe22_CN1,Hz_NMe22_CN1,Hz,True,True,True,True,0.0535,positive_gap,False,
+Hz_POZ1_NPh21_SO2Ph1,Hz_POZ1_NPh21_SO2Ph1,Hz,True,True,True,True,0.06967,positive_gap,False,
+Hz_NPh23,Hz_NPh23,Hz,True,False,False,False,-0.12281,dark_negative_gap,True,selected in Round-1 frozen list but not in the 15-molecule R1 deployment yield (deferred to a later batch)

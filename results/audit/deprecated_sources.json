@@ -1,0 +1,60 @@
+{
+  "authoritative_worktree": "/home/nudt_cleng/2026/github_upload",
+  "deprecated_sources": [
+    {
+      "path": "/home/nudt_cleng/2026/project/scripts/task3_ablation_study.py",
+      "reason": "Legacy Task-3 ablation logic applies shared source-target coverage filtering, so source-missing physics descriptors are dropped and all main ablation configs collapse to the same 54-feature RDKit subset.",
+      "replacement": "/home/nudt_cleng/2026/github_upload/scripts/p0a_ablation_fixed.py"
+    },
+    {
+      "path": "/home/nudt_cleng/2026/project/results/round1_eval/task3_ablation_results.csv",
+      "reason": "Stale output from the deprecated Task-3 ablation chain; nominal feature counts differ but the effective training feature set is the same across configs.",
+      "replacement": "/home/nudt_cleng/2026/github_upload/results/round1_eval/p0a_ablation_multiseed.csv"
+    },
+    {
+      "path": "/home/nudt_cleng/2026/project/results/round1_eval/task3_bootstrap_ci.csv",
+      "reason": "Derived from the same deprecated Task-3 ablation workflow and therefore inherits the same feature-collapse error.",
+      "replacement": "/home/nudt_cleng/2026/github_upload/results/round1_eval/p0a_ablation_multiseed.csv"
+    },
+    {
+      "path": "/home/nudt_cleng/2026/github_repo",
+      "reason": "Earlier exploratory repository line with divergent manuscript drafts, figure pipelines, and model-development scripts; not the authority for the current paper.",
+      "replacement": "/home/nudt_cleng/2026/github_upload"
+    },
+    {
+      "path": "/home/nudt_cleng/2026/src",
+      "reason": "Earlier exploratory top-level script tree that should not be used as the authoritative source for current manuscript evidence without re-audit.",
+      "replacement": "/home/nudt_cleng/2026/github_upload"
+    }
+  ],
+  "authoritative_sources": [
+    {
+      "path": "/home/nudt_cleng/2026/github_upload",
+      "purpose": "Current authoritative manuscript worktree."
+    },
+    {
+      "path": "/home/nudt_cleng/2026/github_upload/scripts/p0a_ablation_fixed.py",
+      "purpose": "Corrected ablation workflow that keeps the source model on shared RDKit features while allowing target-domain physics features in the delta model."
+    },
+    {
+      "path": "/home/nudt_cleng/2026/github_upload/results/round1_eval/p0a_ablation_multiseed.csv",
+      "purpose": "Authoritative ablation result table for manuscript claims."
+    },
+    {
+      "path": "/home/nudt_cleng/2026/github_upload/results/validated_candidates_master.csv",
+      "purpose": "Authoritative validated candidate table; the newer version tightens confidence and decision traceability without changing DEST_eV or classification."
+    },
+    {
+      "path": "/home/nudt_cleng/2026/github_upload/results/canonical_metrics.json",
+      "purpose": "Script-generated manuscript metrics anchor for traceable numerical claims."
+    },
+    {
+      "path": "/home/nudt_cleng/2026/github_upload/paper/audit_reports/worktree_provenance_audit.md",
+      "purpose": "Human-readable provenance audit summarizing which worktrees and outputs are authoritative."
+    }
+  ],
+  "notes": [
+    "The shared manuscript-facing round1_eval outputs compared between /home/nudt_cleng/2026/project and /home/nudt_cleng/2026/github_upload were materially consistent for the common files examined.",
+    "The difference in validated_candidates_master.csv is interpretive metadata: confidence is more conservative and decision_basis is explicit in github_upload, while DEST_eV and classification remain unchanged."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "figure_id": "diag_distance_nonconformity",
+  "source_data_files": [
+    "results/round1_eval/p0b_conformal_calibration.csv",
+    "data/processed/master_molecule_table.csv",
+    "results/diagnostics/distance_nonconformity.csv",
+    "results/diagnostics/distance_nonconformity.json"
+  ],
+  "sample_size": {
+    "n_calibration": 19,
+    "n_test": 14
+  },
+  "key_numbers": {
+    "spearman_distance_vs_nonconformity_test": {
+      "rho": 0.2442,
+      "p_two_sided": 0.4001,
+      "n": 14
+    },
+    "spearman_distance_vs_abs_residual_test": {
+      "rho": 0.2442,
+      "p_two_sided": 0.4001
+    },
+    "mannwhitney_test_gt_calib_loo": {
+      "U": 157.0,
+      "p_one_sided": 0.1958
+    },
+    "test_distance_median": 0.3542,
+    "calib_loo_distance_median": 0.2812
+  },
+  "exclusions_or_filters": [
+    "Distances computed on Morgan fingerprints (radius=2, 2048 bits) from canonical SMILES in master_molecule_table.csv.",
+    "Hz_NH23 is excluded by design from the conformal test set (n_test = 14, not 15)."
+  ],
+  "visualization_caveats": [
+    "Spearman \u03c1 on n = 14 has a wide CI; interpret as directional evidence rather than a calibrated effect size.",
+    "Panel (b) compares test distances to calibration LOO-style distances; both distributions have small n."
+  ],
+  "manuscript_claims_allowed": [
+    "Test-set conformal nonconformity correlates with distance to calibration (Spearman \u03c1 = +0.24, two-sided p = 0.400, n = 14).",
+    "Test molecules are systematically farther from the calibration set than calibration molecules are from each other (Mann\u2013Whitney U one-sided p = 0.196)."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not call the correlation 'statistically significant' without disclosing n = 14.",
+    "Do not generalise the diagnostic to molecule libraries outside the Hz / 5AP scope tested here."
+  ]
+}

@@ -1,0 +1,5 @@
+baseline,expected_invest,our_invest,our_invest_excl_nh23,p_value,p_value_excl_nh23,significant_005
+B1_uniform_random,13.1743,7,6,1.0,1.0,False
+B2_scaffold_stratified,13.0829,7,6,1.0,1.0,False
+B3_hz_greedy_dft,12.1603,7,6,0.9993,1.0,False
+B3_hz_greedy_empirical,10.014,7,6,0.9708,,False

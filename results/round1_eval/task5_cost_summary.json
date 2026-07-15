@@ -1,0 +1,9 @@
+{
+  "total_wall_hours": 1035.17,
+  "total_core_hours": 33357.810000000005,
+  "adc2_fraction": 0.9065343318401297,
+  "n_invest_found": 7,
+  "n_invest_excl_nh23": 6,
+  "cost_per_invest_core_h": 4765.401428571429,
+  "cost_per_invest_excl_nh23": 5559.635000000001
+}

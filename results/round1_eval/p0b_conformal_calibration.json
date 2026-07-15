@@ -1,0 +1,85 @@
+{
+  "design": "Split conformal: calibration=pre-R1 (19 mols), test=R1 deployment (14 mols, excl Hz_NH23)",
+  "calibration_n": 19,
+  "test_n": 14,
+  "calibration_MAE": 0.007679498105864757,
+  "test_MAE": 0.06417972853549889,
+  "results": [
+    {
+      "nominal_coverage": 0.5,
+      "conformal_calib_coverage": 0.5263157894736842,
+      "conformal_test_coverage": 0.07142857142857142,
+      "conformal_width": 0.010385439676736347,
+      "conformal_q_hat": 0.005192719838368174,
+      "bootstrap_calib_coverage": 0.7368421052631579,
+      "bootstrap_test_coverage": 0.2857142857142857,
+      "bootstrap_test_mean_width": 0.11141089903637118
+    },
+    {
+      "nominal_coverage": 0.6,
+      "conformal_calib_coverage": 0.631578947368421,
+      "conformal_test_coverage": 0.07142857142857142,
+      "conformal_width": 0.012996290281195392,
+      "conformal_q_hat": 0.006498145140597696,
+      "bootstrap_calib_coverage": 0.8421052631578947,
+      "bootstrap_test_coverage": 0.5,
+      "bootstrap_test_mean_width": 0.1391809747605705
+    },
+    {
+      "nominal_coverage": 0.7,
+      "conformal_calib_coverage": 0.7368421052631579,
+      "conformal_test_coverage": 0.21428571428571427,
+      "conformal_width": 0.01818123428068663,
+      "conformal_q_hat": 0.009090617140343316,
+      "bootstrap_calib_coverage": 1.0,
+      "bootstrap_test_coverage": 0.5714285714285714,
+      "bootstrap_test_mean_width": 0.1712488002992293
+    },
+    {
+      "nominal_coverage": 0.8,
+      "conformal_calib_coverage": 0.8421052631578947,
+      "conformal_test_coverage": 0.21428571428571427,
+      "conformal_width": 0.023304612189092102,
+      "conformal_q_hat": 0.011652306094546051,
+      "bootstrap_calib_coverage": 1.0,
+      "bootstrap_test_coverage": 0.7142857142857143,
+      "bootstrap_test_mean_width": 0.21191212546680688
+    },
+    {
+      "nominal_coverage": 0.9,
+      "conformal_calib_coverage": 0.9473684210526315,
+      "conformal_test_coverage": 0.35714285714285715,
+      "conformal_width": 0.04800387946781357,
+      "conformal_q_hat": 0.024001939733906786,
+      "bootstrap_calib_coverage": 1.0,
+      "bootstrap_test_coverage": 0.8571428571428571,
+      "bootstrap_test_mean_width": 0.2719153247994519
+    },
+    {
+      "nominal_coverage": 0.95,
+      "conformal_calib_coverage": 1.0,
+      "conformal_test_coverage": 0.35714285714285715,
+      "conformal_width": 0.053355002098083304,
+      "conformal_q_hat": 0.026677501049041652,
+      "bootstrap_calib_coverage": 1.0,
+      "bootstrap_test_coverage": 1.0,
+      "bootstrap_test_mean_width": 0.32398421678232564
+    }
+  ],
+  "uq_correlation": {
+    "calibration": {
+      "rho": 0.28421052631578947,
+      "p": 0.2382962365756818
+    },
+    "test": {
+      "rho": -0.23956043956043957,
+      "p": 0.4094298928517327
+    }
+  },
+  "fixed_baseline": {
+    "width": 0.32,
+    "coverage": 1.0
+  },
+  "conclusion": "Conformal prediction suffers calibration failure (36% at 95% nominal, width=0.053 eV — too narrow for OOD test set). Bootstrap maintains nominal coverage (100%) but its intervals (width=0.324 eV) are comparable to a naive fixed ±0.16 eV baseline (0.320 eV), providing no additional decision-making value. Failure modes differ: conformal is miscalibrated (undercoverage), bootstrap is calibrated but uninformative (≈ naive baseline). Neither method provides useful guidance for INVEST classification under OOD.",
+  "conclusion_strength": "STRONG — conformal miscalibrated, bootstrap uninformative under OOD"
+}

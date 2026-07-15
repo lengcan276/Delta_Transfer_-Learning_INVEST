@@ -1,0 +1,11 @@
+phase,component,wall_hours,core_hours,n_molecules,cost_per_mol_core_h
+P1_prescreening,xTB optimization (155 mols),1.55,1.55,155,0.01
+P1_prescreening,"DFT ΔEST (155 mols, 8 cores)",310.0,2480.0,155,16.0
+P1_prescreening,sTDA (155 mols),15.5,15.5,155,0.1
+P1_prescreening,"KS-OD (155 mols, 8 cores)",77.5,620.0,155,4.0
+P2_training,"Source model ADC(2) (Pollice, 446 mols)",0.0,0.0,446,0.0
+P2_training,"Target labeled (19 mols, pre-existing)",0.0,0.0,19,0.0
+P2_training,ML training + selection,0.1,0.1,16,0.00625
+P3_round1_adc2,"RI-ADC(2)/def2-SVP (16 mols, 48 cores)",630.0,30240.0,16,1890.0
+P3_round1_adc2,xTB geometry opt (2 mols),0.02,0.16,2,0.08
+P4_analysis,Model retrain + evaluation,0.5,0.5,35,0.014285714285714285

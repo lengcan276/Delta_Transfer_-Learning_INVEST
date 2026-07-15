@@ -1,0 +1,58 @@
+{
+  "experiment_id": "diag_B_distance_to_source",
+  "hypothesis": "Round-1 deployment molecules are systematically farther from the 446-molecule Pollice ADC(2) source training set than the pre-Round-1 calibration molecules are, providing a geometric mechanism for the conformal under-coverage.",
+  "fp_settings": {
+    "type": "Morgan",
+    "radius": 2,
+    "nBits": 2048,
+    "knn_k": 5
+  },
+  "n_pollice_source": 446,
+  "n_calibration": 19,
+  "n_test": 14,
+  "distance_summary_d_nn_to_source": {
+    "calib_mean": 0.7449676870847276,
+    "calib_median": 0.75,
+    "test_mean": 0.741127693912433,
+    "test_median": 0.7422798322531452
+  },
+  "distance_summary_d_knn5_to_source": {
+    "calib_mean": 0.7906813594705469,
+    "calib_median": 0.8031265664160401,
+    "test_mean": 0.790564792929296,
+    "test_median": 0.7988133831362936
+  },
+  "mannwhitney_test_dist_gt_calib_dist": {
+    "d_nn": {
+      "U": 135.0,
+      "p_one_sided_greater": 0.4781894102032656
+    },
+    "d_knn5": {
+      "U": 135.5,
+      "p_one_sided_greater": 0.4709571760754787
+    }
+  },
+  "spearman_distance_vs_abs_residual": {
+    "d_nn_all_33": {
+      "rho": 0.15943129459541575,
+      "p": 0.37548999478966877,
+      "n": 33
+    },
+    "d_knn5_all_33": {
+      "rho": 0.15811466040676259,
+      "p": 0.3794968330135559,
+      "n": 33
+    },
+    "d_nn_test_14": {
+      "rho": -0.16501660150520917,
+      "p": 0.5729185122712152,
+      "n": 14
+    },
+    "d_knn5_test_14": {
+      "rho": -0.13406593406593406,
+      "p": 0.6477195279851133,
+      "n": 14
+    }
+  },
+  "interpretation": "If test mols are systematically farther from the source set than calib mols are (Mann\u2013Whitney p < 0.05, one-sided), the deployment-shift hypothesis holds and conformal calibration computed on the calib set cannot be expected to transfer."
+}

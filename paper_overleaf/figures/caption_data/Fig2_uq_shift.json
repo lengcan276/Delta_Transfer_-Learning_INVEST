@@ -1,0 +1,106 @@
+{
+  "figure_id": "Fig2_uq_shift",
+  "source_data_files": [
+    "results/canonical_metrics.json",
+    "results/round1_eval/p0b_conformal_calibration.json",
+    "results/round1_eval/p0b_conformal_calibration.csv"
+  ],
+  "sample_size": {
+    "calibration_n": 19,
+    "test_n": 14,
+    "calibration_set": "pre-Round-1 split-conformal calibration (19 mols)",
+    "test_set": "Round-1 deployment EXCLUDING Hz_NH23 (14 mols)"
+  },
+  "key_numbers": {
+    "calibration_MAE_eV": 0.0076794981,
+    "test_MAE_eV": 0.0641797285,
+    "conformal_90_test_coverage": 0.3571428571,
+    "conformal_90_test_hits_over_n": "5/14",
+    "conformal_90_test_coverage_pct": 35.7,
+    "conformal_90_wilson_95_ci": [
+      0.1634,
+      0.6124
+    ],
+    "conformal_90_width_eV": 0.0480038795,
+    "conformal_95_test_coverage": 0.3571428571,
+    "conformal_95_width_eV": 0.0533550021,
+    "bootstrap_95_test_coverage": 1.0,
+    "bootstrap_95_mean_width_eV": 0.3239842168,
+    "fixed_baseline_width_eV": 0.32,
+    "coverage_by_nominal_level": {
+      "0.5": {
+        "conformal_calib_coverage": 0.5263157895,
+        "conformal_test_coverage": 0.0714285714,
+        "conformal_width_eV": 0.0103854397,
+        "conformal_q_hat": 0.0051927198,
+        "bootstrap_calib_coverage": 0.7368421053,
+        "bootstrap_test_coverage": 0.2857142857,
+        "bootstrap_test_mean_width_eV": 0.111410899
+      },
+      "0.6": {
+        "conformal_calib_coverage": 0.6315789474,
+        "conformal_test_coverage": 0.0714285714,
+        "conformal_width_eV": 0.0129962903,
+        "conformal_q_hat": 0.0064981451,
+        "bootstrap_calib_coverage": 0.8421052632,
+        "bootstrap_test_coverage": 0.5,
+        "bootstrap_test_mean_width_eV": 0.1391809748
+      },
+      "0.7": {
+        "conformal_calib_coverage": 0.7368421053,
+        "conformal_test_coverage": 0.2142857143,
+        "conformal_width_eV": 0.0181812343,
+        "conformal_q_hat": 0.0090906171,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 0.5714285714,
+        "bootstrap_test_mean_width_eV": 0.1712488003
+      },
+      "0.8": {
+        "conformal_calib_coverage": 0.8421052632,
+        "conformal_test_coverage": 0.2142857143,
+        "conformal_width_eV": 0.0233046122,
+        "conformal_q_hat": 0.0116523061,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 0.7142857143,
+        "bootstrap_test_mean_width_eV": 0.2119121255
+      },
+      "0.9": {
+        "conformal_calib_coverage": 0.9473684211,
+        "conformal_test_coverage": 0.3571428571,
+        "conformal_width_eV": 0.0480038795,
+        "conformal_q_hat": 0.0240019397,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 0.8571428571,
+        "bootstrap_test_mean_width_eV": 0.2719153248
+      },
+      "0.95": {
+        "conformal_calib_coverage": 1.0,
+        "conformal_test_coverage": 0.3571428571,
+        "conformal_width_eV": 0.0533550021,
+        "conformal_q_hat": 0.026677501,
+        "bootstrap_calib_coverage": 1.0,
+        "bootstrap_test_coverage": 1.0,
+        "bootstrap_test_mean_width_eV": 0.3239842168
+      }
+    }
+  },
+  "exclusions_or_filters": [
+    "Test set is the Round-1 deployment EXCLUDING Hz_NH23 (n = 14). The 15-molecule deployment yield is reported separately and must NOT be used as the conformal test denominator.",
+    "Calibration set is the pre-Round-1 labeled target subset (n = 19); it is the split-conformal calibration set, NOT the DFT 5-anchor TDDFT calibration."
+  ],
+  "visualization_caveats": [
+    "Conformal-90 test coverage is 5/14 = 35.7%. With n_test = 14 (< 30) this point estimate has a wide Wilson 95% CI of [0.163, 0.612].",
+    "Coverage bars at every nominal level must carry the small-sample caveat: n_test = 14 only; CI overlap with nominal does NOT prove calibration.",
+    "Bootstrap intervals achieve nominal coverage but at much wider intervals (see width columns); show both coverage AND width to avoid misleading the reader."
+  ],
+  "manuscript_claims_allowed": [
+    "Split-conformal calibrated on n = 19 pre-Round-1 molecules; tested on n = 14 Round-1 deployments (Hz_NH23 excluded by design).",
+    "Conformal-90 test coverage 5/14 = 35.7% (Wilson 95% CI [0.163, 0.612]) is well below the nominal 90% level, indicating distribution shift between the calibration and deployment subsets.",
+    "Bootstrap intervals achieve nominal coverage but at substantially wider intervals than the conformal intervals."
+  ],
+  "manuscript_claims_not_allowed": [
+    "Do not report conformal coverage without stating n_test = 14 and the small-sample CI.",
+    "Do not use the 15-molecule deployment denominator for any conformal coverage statement (use 14).",
+    "Do not claim the conformal predictor is well-calibrated from a single coverage point estimate; cite the Wilson CI."
+  ]
+}
